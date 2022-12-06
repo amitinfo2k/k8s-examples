@@ -1,6 +1,6 @@
 
 
-# Example to splict Calico network into two where one suports destination natting and other one doesn't
+# Example to splict Calico network into two where one supports destination natting and other one doesn't
 
 ## Prereuisite
 
