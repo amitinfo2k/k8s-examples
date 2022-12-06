@@ -1,0 +1,13 @@
+---
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  name: default-pool
+spec:
+  blockSize: 24
+  cidr: 192.168.84.0/24
+  natOutgoing: false
+  ipipMode: Always
+  nodeSelector: all()
+  disabled: false
+
