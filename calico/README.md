@@ -20,9 +20,9 @@ calicoctl create -f my-ip-pool.yaml
 
 ```
 $ calicoctl get ipPool -o wide
- NAME                CIDR              NAT     IPIPMODE   VXLANMODE   DISABLED   SELECTOR
- default-pool        192.168.84.0/24   false   Always     Never       false      all()
- no-nat-10.0.0.0-8   10.0.0.0/8        false   Never      Never       false      all()
+NAME                CIDR              NAT     IPIPMODE   VXLANMODE   DISABLED   SELECTOR
+default-pool        192.168.84.0/24   true    Always     Never       false      all()
+no-nat-10.0.0.0-8   10.0.0.0/8        false   Never      Never       false      all()
 ```
 4] Create a pod with following annotation:
 ```

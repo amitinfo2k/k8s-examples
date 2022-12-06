@@ -6,7 +6,7 @@ metadata:
 spec:
   blockSize: 24
   cidr: 192.168.84.0/24
-  natOutgoing: false
+  natOutgoing: true
   ipipMode: Always
   nodeSelector: all()
   disabled: false
