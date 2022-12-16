@@ -4,4197 +4,3038 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/go-chi/chi/v5"
+	"github.com/labstack/echo/v4"
 )
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
 	// DELETE /connectivity-services
 	// (DELETE /aether/v2.0.x/{target}/connectivity-services)
-	DeleteConnectivityServices(w http.ResponseWriter, r *http.Request, target Target)
+	DeleteConnectivityServices(ctx echo.Context, target Target) error
 	// GET /connectivity-services Container
 	// (GET /aether/v2.0.x/{target}/connectivity-services)
-	GetConnectivityServices(w http.ResponseWriter, r *http.Request, target Target)
+	GetConnectivityServices(ctx echo.Context, target Target) error
 	// POST /connectivity-services
 	// (POST /aether/v2.0.x/{target}/connectivity-services)
-	PostConnectivityServices(w http.ResponseWriter, r *http.Request, target Target)
+	PostConnectivityServices(ctx echo.Context, target Target) error
 	// GET /connectivity-services/connectivity-service List
 	// (GET /aether/v2.0.x/{target}/connectivity-services/connectivity-service)
-	GetConnectivityServicesConnectivityServiceList(w http.ResponseWriter, r *http.Request, target Target)
+	GetConnectivityServicesConnectivityServiceList(ctx echo.Context, target Target) error
 	// DELETE /connectivity-services/connectivity-service
 	// (DELETE /aether/v2.0.x/{target}/connectivity-services/connectivity-service/{connectivity-service-id})
-	DeleteConnectivityServicesConnectivityService(w http.ResponseWriter, r *http.Request, target Target, connectivityServiceId string)
+	DeleteConnectivityServicesConnectivityService(ctx echo.Context, target Target, connectivityServiceId string) error
 	// GET /connectivity-services/connectivity-service Container
 	// (GET /aether/v2.0.x/{target}/connectivity-services/connectivity-service/{connectivity-service-id})
-	GetConnectivityServicesConnectivityService(w http.ResponseWriter, r *http.Request, target Target, connectivityServiceId string)
+	GetConnectivityServicesConnectivityService(ctx echo.Context, target Target, connectivityServiceId string) error
 	// POST /connectivity-services/connectivity-service
 	// (POST /aether/v2.0.x/{target}/connectivity-services/connectivity-service/{connectivity-service-id})
-	PostConnectivityServicesConnectivityService(w http.ResponseWriter, r *http.Request, target Target, connectivityServiceId string)
+	PostConnectivityServicesConnectivityService(ctx echo.Context, target Target, connectivityServiceId string) error
 	// DELETE /enterprises
 	// (DELETE /aether/v2.0.x/{target}/enterprises)
-	DeleteEnterprises(w http.ResponseWriter, r *http.Request, target Target)
+	DeleteEnterprises(ctx echo.Context, target Target) error
 	// GET /enterprises Container
 	// (GET /aether/v2.0.x/{target}/enterprises)
-	GetEnterprises(w http.ResponseWriter, r *http.Request, target Target)
+	GetEnterprises(ctx echo.Context, target Target) error
 	// POST /enterprises
 	// (POST /aether/v2.0.x/{target}/enterprises)
-	PostEnterprises(w http.ResponseWriter, r *http.Request, target Target)
+	PostEnterprises(ctx echo.Context, target Target) error
 	// GET /enterprises/enterprise List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise)
-	GetEnterprisesEnterpriseList(w http.ResponseWriter, r *http.Request, target Target)
+	GetEnterprisesEnterpriseList(ctx echo.Context, target Target) error
 	// DELETE /enterprises/enterprise
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id})
-	DeleteEnterprisesEnterprise(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string)
+	DeleteEnterprisesEnterprise(ctx echo.Context, target Target, enterpriseId string) error
 	// GET /enterprises/enterprise Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id})
-	GetEnterprisesEnterprise(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string)
+	GetEnterprisesEnterprise(ctx echo.Context, target Target, enterpriseId string) error
 	// POST /enterprises/enterprise
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id})
-	PostEnterprisesEnterprise(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string)
+	PostEnterprisesEnterprise(ctx echo.Context, target Target, enterpriseId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/application List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application)
-	GetEnterprisesEnterpriseApplicationList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string)
+	GetEnterprisesEnterpriseApplicationList(ctx echo.Context, target Target, enterpriseId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/application
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id})
-	DeleteEnterprisesEnterpriseApplication(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, applicationId string)
+	DeleteEnterprisesEnterpriseApplication(ctx echo.Context, target Target, enterpriseId string, applicationId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/application Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id})
-	GetEnterprisesEnterpriseApplication(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, applicationId string)
+	GetEnterprisesEnterpriseApplication(ctx echo.Context, target Target, enterpriseId string, applicationId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/application
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id})
-	PostEnterprisesEnterpriseApplication(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, applicationId string)
+	PostEnterprisesEnterpriseApplication(ctx echo.Context, target Target, enterpriseId string, applicationId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint)
-	GetEnterprisesEnterpriseApplicationEndpointList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, applicationId string)
+	GetEnterprisesEnterpriseApplicationEndpointList(ctx echo.Context, target Target, enterpriseId string, applicationId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id})
-	DeleteEnterprisesEnterpriseApplicationEndpoint(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, applicationId string, endpointId string)
+	DeleteEnterprisesEnterpriseApplicationEndpoint(ctx echo.Context, target Target, enterpriseId string, applicationId string, endpointId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id})
-	GetEnterprisesEnterpriseApplicationEndpoint(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, applicationId string, endpointId string)
+	GetEnterprisesEnterpriseApplicationEndpoint(ctx echo.Context, target Target, enterpriseId string, applicationId string, endpointId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id})
-	PostEnterprisesEnterpriseApplicationEndpoint(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, applicationId string, endpointId string)
+	PostEnterprisesEnterpriseApplicationEndpoint(ctx echo.Context, target Target, enterpriseId string, applicationId string, endpointId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr)
-	DeleteEnterprisesEnterpriseApplicationEndpointMbr(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, applicationId string, endpointId string)
+	DeleteEnterprisesEnterpriseApplicationEndpointMbr(ctx echo.Context, target Target, enterpriseId string, applicationId string, endpointId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr)
-	GetEnterprisesEnterpriseApplicationEndpointMbr(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, applicationId string, endpointId string)
+	GetEnterprisesEnterpriseApplicationEndpointMbr(ctx echo.Context, target Target, enterpriseId string, applicationId string, endpointId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr)
-	PostEnterprisesEnterpriseApplicationEndpointMbr(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, applicationId string, endpointId string)
+	PostEnterprisesEnterpriseApplicationEndpointMbr(ctx echo.Context, target Target, enterpriseId string, applicationId string, endpointId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/connectivity-service List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/connectivity-service)
-	GetEnterprisesEnterpriseConnectivityServiceList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string)
+	GetEnterprisesEnterpriseConnectivityServiceList(ctx echo.Context, target Target, enterpriseId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/connectivity-service
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/connectivity-service/{connectivity-service})
-	DeleteEnterprisesEnterpriseConnectivityService(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, connectivityService string)
+	DeleteEnterprisesEnterpriseConnectivityService(ctx echo.Context, target Target, enterpriseId string, connectivityService string) error
 	// GET /enterprises/enterprise/{enterprise-id}/connectivity-service Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/connectivity-service/{connectivity-service})
-	GetEnterprisesEnterpriseConnectivityService(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, connectivityService string)
+	GetEnterprisesEnterpriseConnectivityService(ctx echo.Context, target Target, enterpriseId string, connectivityService string) error
 	// POST /enterprises/enterprise/{enterprise-id}/connectivity-service
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/connectivity-service/{connectivity-service})
-	PostEnterprisesEnterpriseConnectivityService(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, connectivityService string)
+	PostEnterprisesEnterpriseConnectivityService(ctx echo.Context, target Target, enterpriseId string, connectivityService string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site)
-	GetEnterprisesEnterpriseSiteList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string)
+	GetEnterprisesEnterpriseSiteList(ctx echo.Context, target Target, enterpriseId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id})
-	DeleteEnterprisesEnterpriseSite(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	DeleteEnterprisesEnterpriseSite(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id})
-	GetEnterprisesEnterpriseSite(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	GetEnterprisesEnterpriseSite(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id})
-	PostEnterprisesEnterpriseSite(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	PostEnterprisesEnterpriseSite(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device)
-	GetEnterprisesEnterpriseSiteDeviceList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	GetEnterprisesEnterpriseSiteDeviceList(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group)
-	GetEnterprisesEnterpriseSiteDeviceGroupList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	GetEnterprisesEnterpriseSiteDeviceGroupList(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id})
-	DeleteEnterprisesEnterpriseSiteDeviceGroup(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceGroupId string)
+	DeleteEnterprisesEnterpriseSiteDeviceGroup(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceGroupId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id})
-	GetEnterprisesEnterpriseSiteDeviceGroup(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceGroupId string)
+	GetEnterprisesEnterpriseSiteDeviceGroup(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceGroupId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id})
-	PostEnterprisesEnterpriseSiteDeviceGroup(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceGroupId string)
+	PostEnterprisesEnterpriseSiteDeviceGroup(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceGroupId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device)
-	GetEnterprisesEnterpriseSiteDeviceGroupDeviceList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceGroupId string)
+	GetEnterprisesEnterpriseSiteDeviceGroupDeviceList(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceGroupId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device/{device-id})
-	DeleteEnterprisesEnterpriseSiteDeviceGroupDevice(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceGroupId string, deviceId string)
+	DeleteEnterprisesEnterpriseSiteDeviceGroupDevice(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceGroupId string, deviceId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device/{device-id})
-	GetEnterprisesEnterpriseSiteDeviceGroupDevice(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceGroupId string, deviceId string)
+	GetEnterprisesEnterpriseSiteDeviceGroupDevice(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceGroupId string, deviceId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device/{device-id})
-	PostEnterprisesEnterpriseSiteDeviceGroupDevice(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceGroupId string, deviceId string)
+	PostEnterprisesEnterpriseSiteDeviceGroupDevice(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceGroupId string, deviceId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr)
-	DeleteEnterprisesEnterpriseSiteDeviceGroupMbr(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceGroupId string)
+	DeleteEnterprisesEnterpriseSiteDeviceGroupMbr(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceGroupId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr)
-	GetEnterprisesEnterpriseSiteDeviceGroupMbr(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceGroupId string)
+	GetEnterprisesEnterpriseSiteDeviceGroupMbr(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceGroupId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr)
-	PostEnterprisesEnterpriseSiteDeviceGroupMbr(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceGroupId string)
+	PostEnterprisesEnterpriseSiteDeviceGroupMbr(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceGroupId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/device
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device/{device-id})
-	DeleteEnterprisesEnterpriseSiteDevice(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceId string)
+	DeleteEnterprisesEnterpriseSiteDevice(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device/{device-id})
-	GetEnterprisesEnterpriseSiteDevice(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceId string)
+	GetEnterprisesEnterpriseSiteDevice(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/device
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device/{device-id})
-	PostEnterprisesEnterpriseSiteDevice(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, deviceId string)
+	PostEnterprisesEnterpriseSiteDevice(ctx echo.Context, target Target, enterpriseId string, siteId string, deviceId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition)
-	DeleteEnterprisesEnterpriseSiteImsiDefinition(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	DeleteEnterprisesEnterpriseSiteImsiDefinition(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition)
-	GetEnterprisesEnterpriseSiteImsiDefinition(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	GetEnterprisesEnterpriseSiteImsiDefinition(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition)
-	PostEnterprisesEnterpriseSiteImsiDefinition(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	PostEnterprisesEnterpriseSiteImsiDefinition(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain)
-	GetEnterprisesEnterpriseSiteIpDomainList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	GetEnterprisesEnterpriseSiteIpDomainList(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain/{ip-domain-id})
-	DeleteEnterprisesEnterpriseSiteIpDomain(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, ipDomainId string)
+	DeleteEnterprisesEnterpriseSiteIpDomain(ctx echo.Context, target Target, enterpriseId string, siteId string, ipDomainId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain/{ip-domain-id})
-	GetEnterprisesEnterpriseSiteIpDomain(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, ipDomainId string)
+	GetEnterprisesEnterpriseSiteIpDomain(ctx echo.Context, target Target, enterpriseId string, siteId string, ipDomainId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain/{ip-domain-id})
-	PostEnterprisesEnterpriseSiteIpDomain(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, ipDomainId string)
+	PostEnterprisesEnterpriseSiteIpDomain(ctx echo.Context, target Target, enterpriseId string, siteId string, ipDomainId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring)
-	DeleteEnterprisesEnterpriseSiteMonitoring(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	DeleteEnterprisesEnterpriseSiteMonitoring(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring)
-	GetEnterprisesEnterpriseSiteMonitoring(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	GetEnterprisesEnterpriseSiteMonitoring(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring)
-	PostEnterprisesEnterpriseSiteMonitoring(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	PostEnterprisesEnterpriseSiteMonitoring(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device)
-	GetEnterprisesEnterpriseSiteMonitoringEdgeDeviceList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	GetEnterprisesEnterpriseSiteMonitoringEdgeDeviceList(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device/{edge-device-id})
-	DeleteEnterprisesEnterpriseSiteMonitoringEdgeDevice(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, edgeDeviceId string)
+	DeleteEnterprisesEnterpriseSiteMonitoringEdgeDevice(ctx echo.Context, target Target, enterpriseId string, siteId string, edgeDeviceId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device/{edge-device-id})
-	GetEnterprisesEnterpriseSiteMonitoringEdgeDevice(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, edgeDeviceId string)
+	GetEnterprisesEnterpriseSiteMonitoringEdgeDevice(ctx echo.Context, target Target, enterpriseId string, siteId string, edgeDeviceId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device/{edge-device-id})
-	PostEnterprisesEnterpriseSiteMonitoringEdgeDevice(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, edgeDeviceId string)
+	PostEnterprisesEnterpriseSiteMonitoringEdgeDevice(ctx echo.Context, target Target, enterpriseId string, siteId string, edgeDeviceId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card)
-	GetEnterprisesEnterpriseSiteSimCardList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	GetEnterprisesEnterpriseSiteSimCardList(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card/{sim-id})
-	DeleteEnterprisesEnterpriseSiteSimCard(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, simId string)
+	DeleteEnterprisesEnterpriseSiteSimCard(ctx echo.Context, target Target, enterpriseId string, siteId string, simId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card/{sim-id})
-	GetEnterprisesEnterpriseSiteSimCard(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, simId string)
+	GetEnterprisesEnterpriseSiteSimCard(ctx echo.Context, target Target, enterpriseId string, siteId string, simId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card/{sim-id})
-	PostEnterprisesEnterpriseSiteSimCard(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, simId string)
+	PostEnterprisesEnterpriseSiteSimCard(ctx echo.Context, target Target, enterpriseId string, siteId string, simId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice)
-	GetEnterprisesEnterpriseSiteSliceList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	GetEnterprisesEnterpriseSiteSliceList(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id})
-	DeleteEnterprisesEnterpriseSiteSlice(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string)
+	DeleteEnterprisesEnterpriseSiteSlice(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id})
-	GetEnterprisesEnterpriseSiteSlice(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string)
+	GetEnterprisesEnterpriseSiteSlice(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id})
-	PostEnterprisesEnterpriseSiteSlice(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string)
+	PostEnterprisesEnterpriseSiteSlice(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group)
-	GetEnterprisesEnterpriseSiteSliceDeviceGroupList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string)
+	GetEnterprisesEnterpriseSiteSliceDeviceGroupList(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group/{device-group})
-	DeleteEnterprisesEnterpriseSiteSliceDeviceGroup(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string, deviceGroup string)
+	DeleteEnterprisesEnterpriseSiteSliceDeviceGroup(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string, deviceGroup string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group/{device-group})
-	GetEnterprisesEnterpriseSiteSliceDeviceGroup(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string, deviceGroup string)
+	GetEnterprisesEnterpriseSiteSliceDeviceGroup(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string, deviceGroup string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group/{device-group})
-	PostEnterprisesEnterpriseSiteSliceDeviceGroup(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string, deviceGroup string)
+	PostEnterprisesEnterpriseSiteSliceDeviceGroup(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string, deviceGroup string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter)
-	GetEnterprisesEnterpriseSiteSliceFilterList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string)
+	GetEnterprisesEnterpriseSiteSliceFilterList(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter/{application})
-	DeleteEnterprisesEnterpriseSiteSliceFilter(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string, application string)
+	DeleteEnterprisesEnterpriseSiteSliceFilter(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string, application string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter/{application})
-	GetEnterprisesEnterpriseSiteSliceFilter(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string, application string)
+	GetEnterprisesEnterpriseSiteSliceFilter(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string, application string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter/{application})
-	PostEnterprisesEnterpriseSiteSliceFilter(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string, application string)
+	PostEnterprisesEnterpriseSiteSliceFilter(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string, application string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr)
-	DeleteEnterprisesEnterpriseSiteSliceMbr(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string)
+	DeleteEnterprisesEnterpriseSiteSliceMbr(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr)
-	GetEnterprisesEnterpriseSiteSliceMbr(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string)
+	GetEnterprisesEnterpriseSiteSliceMbr(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr)
-	PostEnterprisesEnterpriseSiteSliceMbr(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string)
+	PostEnterprisesEnterpriseSiteSliceMbr(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule)
-	GetEnterprisesEnterpriseSiteSlicePriorityTrafficRuleList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string)
+	GetEnterprisesEnterpriseSiteSlicePriorityTrafficRuleList(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id})
-	DeleteEnterprisesEnterpriseSiteSlicePriorityTrafficRule(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string, priorityTrafficRuleId string)
+	DeleteEnterprisesEnterpriseSiteSlicePriorityTrafficRule(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string, priorityTrafficRuleId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id})
-	GetEnterprisesEnterpriseSiteSlicePriorityTrafficRule(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string, priorityTrafficRuleId string)
+	GetEnterprisesEnterpriseSiteSlicePriorityTrafficRule(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string, priorityTrafficRuleId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id})
-	PostEnterprisesEnterpriseSiteSlicePriorityTrafficRule(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, sliceId string, priorityTrafficRuleId string)
+	PostEnterprisesEnterpriseSiteSlicePriorityTrafficRule(ctx echo.Context, target Target, enterpriseId string, siteId string, sliceId string, priorityTrafficRuleId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell)
-	GetEnterprisesEnterpriseSiteSmallCellList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	GetEnterprisesEnterpriseSiteSmallCellList(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell/{small-cell-id})
-	DeleteEnterprisesEnterpriseSiteSmallCell(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, smallCellId string)
+	DeleteEnterprisesEnterpriseSiteSmallCell(ctx echo.Context, target Target, enterpriseId string, siteId string, smallCellId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell/{small-cell-id})
-	GetEnterprisesEnterpriseSiteSmallCell(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, smallCellId string)
+	GetEnterprisesEnterpriseSiteSmallCell(ctx echo.Context, target Target, enterpriseId string, siteId string, smallCellId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell/{small-cell-id})
-	PostEnterprisesEnterpriseSiteSmallCell(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, smallCellId string)
+	PostEnterprisesEnterpriseSiteSmallCell(ctx echo.Context, target Target, enterpriseId string, siteId string, smallCellId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/upf List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/upf)
-	GetEnterprisesEnterpriseSiteUpfList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string)
+	GetEnterprisesEnterpriseSiteUpfList(ctx echo.Context, target Target, enterpriseId string, siteId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/upf
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/upf/{upf-id})
-	DeleteEnterprisesEnterpriseSiteUpf(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, upfId string)
+	DeleteEnterprisesEnterpriseSiteUpf(ctx echo.Context, target Target, enterpriseId string, siteId string, upfId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/upf Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/upf/{upf-id})
-	GetEnterprisesEnterpriseSiteUpf(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, upfId string)
+	GetEnterprisesEnterpriseSiteUpf(ctx echo.Context, target Target, enterpriseId string, siteId string, upfId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/upf
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/upf/{upf-id})
-	PostEnterprisesEnterpriseSiteUpf(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, siteId string, upfId string)
+	PostEnterprisesEnterpriseSiteUpf(ctx echo.Context, target Target, enterpriseId string, siteId string, upfId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/template List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template)
-	GetEnterprisesEnterpriseTemplateList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string)
+	GetEnterprisesEnterpriseTemplateList(ctx echo.Context, target Target, enterpriseId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/template
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id})
-	DeleteEnterprisesEnterpriseTemplate(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, templateId string)
+	DeleteEnterprisesEnterpriseTemplate(ctx echo.Context, target Target, enterpriseId string, templateId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/template Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id})
-	GetEnterprisesEnterpriseTemplate(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, templateId string)
+	GetEnterprisesEnterpriseTemplate(ctx echo.Context, target Target, enterpriseId string, templateId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/template
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id})
-	PostEnterprisesEnterpriseTemplate(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, templateId string)
+	PostEnterprisesEnterpriseTemplate(ctx echo.Context, target Target, enterpriseId string, templateId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/template/{template-id}/mbr
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id}/mbr)
-	DeleteEnterprisesEnterpriseTemplateMbr(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, templateId string)
+	DeleteEnterprisesEnterpriseTemplateMbr(ctx echo.Context, target Target, enterpriseId string, templateId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/template/{template-id}/mbr Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id}/mbr)
-	GetEnterprisesEnterpriseTemplateMbr(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, templateId string)
+	GetEnterprisesEnterpriseTemplateMbr(ctx echo.Context, target Target, enterpriseId string, templateId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/template/{template-id}/mbr
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id}/mbr)
-	PostEnterprisesEnterpriseTemplateMbr(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, templateId string)
+	PostEnterprisesEnterpriseTemplateMbr(ctx echo.Context, target Target, enterpriseId string, templateId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/traffic-class List
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/traffic-class)
-	GetEnterprisesEnterpriseTrafficClassList(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string)
+	GetEnterprisesEnterpriseTrafficClassList(ctx echo.Context, target Target, enterpriseId string) error
 	// DELETE /enterprises/enterprise/{enterprise-id}/traffic-class
 	// (DELETE /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/traffic-class/{traffic-class-id})
-	DeleteEnterprisesEnterpriseTrafficClass(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, trafficClassId string)
+	DeleteEnterprisesEnterpriseTrafficClass(ctx echo.Context, target Target, enterpriseId string, trafficClassId string) error
 	// GET /enterprises/enterprise/{enterprise-id}/traffic-class Container
 	// (GET /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/traffic-class/{traffic-class-id})
-	GetEnterprisesEnterpriseTrafficClass(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, trafficClassId string)
+	GetEnterprisesEnterpriseTrafficClass(ctx echo.Context, target Target, enterpriseId string, trafficClassId string) error
 	// POST /enterprises/enterprise/{enterprise-id}/traffic-class
 	// (POST /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/traffic-class/{traffic-class-id})
-	PostEnterprisesEnterpriseTrafficClass(w http.ResponseWriter, r *http.Request, target Target, enterpriseId string, trafficClassId string)
+	PostEnterprisesEnterpriseTrafficClass(ctx echo.Context, target Target, enterpriseId string, trafficClassId string) error
 }
 
-// ServerInterfaceWrapper converts contexts to parameters.
+// ServerInterfaceWrapper converts echo contexts to parameters.
 type ServerInterfaceWrapper struct {
-	Handler            ServerInterface
-	HandlerMiddlewares []MiddlewareFunc
+	Handler ServerInterface
 }
 
-type MiddlewareFunc func(http.HandlerFunc) http.HandlerFunc
-
-// DeleteConnectivityServices operation middleware
-func (siw *ServerInterfaceWrapper) DeleteConnectivityServices(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteConnectivityServices converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteConnectivityServices(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteConnectivityServices(w, r, target)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteConnectivityServices(ctx, target)
+	return err
 }
 
-// GetConnectivityServices operation middleware
-func (siw *ServerInterfaceWrapper) GetConnectivityServices(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetConnectivityServices converts echo context to params.
+func (w *ServerInterfaceWrapper) GetConnectivityServices(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetConnectivityServices(w, r, target)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetConnectivityServices(ctx, target)
+	return err
 }
 
-// PostConnectivityServices operation middleware
-func (siw *ServerInterfaceWrapper) PostConnectivityServices(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostConnectivityServices converts echo context to params.
+func (w *ServerInterfaceWrapper) PostConnectivityServices(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostConnectivityServices(w, r, target)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostConnectivityServices(ctx, target)
+	return err
 }
 
-// GetConnectivityServicesConnectivityServiceList operation middleware
-func (siw *ServerInterfaceWrapper) GetConnectivityServicesConnectivityServiceList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetConnectivityServicesConnectivityServiceList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetConnectivityServicesConnectivityServiceList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetConnectivityServicesConnectivityServiceList(w, r, target)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetConnectivityServicesConnectivityServiceList(ctx, target)
+	return err
 }
 
-// DeleteConnectivityServicesConnectivityService operation middleware
-func (siw *ServerInterfaceWrapper) DeleteConnectivityServicesConnectivityService(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteConnectivityServicesConnectivityService converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteConnectivityServicesConnectivityService(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "connectivity-service-id" -------------
 	var connectivityServiceId string
 
-	connectivityServiceId = chi.URLParam(r, "connectivity-service-id")
+	connectivityServiceId = ctx.Param("connectivity-service-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteConnectivityServicesConnectivityService(w, r, target, connectivityServiceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteConnectivityServicesConnectivityService(ctx, target, connectivityServiceId)
+	return err
 }
 
-// GetConnectivityServicesConnectivityService operation middleware
-func (siw *ServerInterfaceWrapper) GetConnectivityServicesConnectivityService(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetConnectivityServicesConnectivityService converts echo context to params.
+func (w *ServerInterfaceWrapper) GetConnectivityServicesConnectivityService(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "connectivity-service-id" -------------
 	var connectivityServiceId string
 
-	connectivityServiceId = chi.URLParam(r, "connectivity-service-id")
+	connectivityServiceId = ctx.Param("connectivity-service-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetConnectivityServicesConnectivityService(w, r, target, connectivityServiceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetConnectivityServicesConnectivityService(ctx, target, connectivityServiceId)
+	return err
 }
 
-// PostConnectivityServicesConnectivityService operation middleware
-func (siw *ServerInterfaceWrapper) PostConnectivityServicesConnectivityService(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostConnectivityServicesConnectivityService converts echo context to params.
+func (w *ServerInterfaceWrapper) PostConnectivityServicesConnectivityService(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "connectivity-service-id" -------------
 	var connectivityServiceId string
 
-	connectivityServiceId = chi.URLParam(r, "connectivity-service-id")
+	connectivityServiceId = ctx.Param("connectivity-service-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostConnectivityServicesConnectivityService(w, r, target, connectivityServiceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostConnectivityServicesConnectivityService(ctx, target, connectivityServiceId)
+	return err
 }
 
-// DeleteEnterprises operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprises(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprises converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprises(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprises(w, r, target)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprises(ctx, target)
+	return err
 }
 
-// GetEnterprises operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprises(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprises converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprises(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprises(w, r, target)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprises(ctx, target)
+	return err
 }
 
-// PostEnterprises operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprises(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprises converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprises(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprises(w, r, target)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprises(ctx, target)
+	return err
 }
 
-// GetEnterprisesEnterpriseList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseList(w, r, target)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseList(ctx, target)
+	return err
 }
 
-// DeleteEnterprisesEnterprise operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterprise(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterprise converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterprise(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterprise(w, r, target, enterpriseId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterprise(ctx, target, enterpriseId)
+	return err
 }
 
-// GetEnterprisesEnterprise operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterprise(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterprise converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterprise(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterprise(w, r, target, enterpriseId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterprise(ctx, target, enterpriseId)
+	return err
 }
 
-// PostEnterprisesEnterprise operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterprise(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterprise converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterprise(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterprise(w, r, target, enterpriseId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterprise(ctx, target, enterpriseId)
+	return err
 }
 
-// GetEnterprisesEnterpriseApplicationList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplicationList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseApplicationList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplicationList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseApplicationList(w, r, target, enterpriseId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseApplicationList(ctx, target, enterpriseId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseApplication operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseApplication(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseApplication converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseApplication(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "application-id" -------------
 	var applicationId string
 
-	applicationId = chi.URLParam(r, "application-id")
+	applicationId = ctx.Param("application-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseApplication(w, r, target, enterpriseId, applicationId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseApplication(ctx, target, enterpriseId, applicationId)
+	return err
 }
 
-// GetEnterprisesEnterpriseApplication operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplication(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseApplication converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplication(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "application-id" -------------
 	var applicationId string
 
-	applicationId = chi.URLParam(r, "application-id")
+	applicationId = ctx.Param("application-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseApplication(w, r, target, enterpriseId, applicationId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseApplication(ctx, target, enterpriseId, applicationId)
+	return err
 }
 
-// PostEnterprisesEnterpriseApplication operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseApplication(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseApplication converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseApplication(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "application-id" -------------
 	var applicationId string
 
-	applicationId = chi.URLParam(r, "application-id")
+	applicationId = ctx.Param("application-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseApplication(w, r, target, enterpriseId, applicationId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseApplication(ctx, target, enterpriseId, applicationId)
+	return err
 }
 
-// GetEnterprisesEnterpriseApplicationEndpointList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplicationEndpointList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseApplicationEndpointList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplicationEndpointList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "application-id" -------------
 	var applicationId string
 
-	applicationId = chi.URLParam(r, "application-id")
+	applicationId = ctx.Param("application-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseApplicationEndpointList(w, r, target, enterpriseId, applicationId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseApplicationEndpointList(ctx, target, enterpriseId, applicationId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseApplicationEndpoint operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseApplicationEndpoint(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseApplicationEndpoint converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseApplicationEndpoint(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "application-id" -------------
 	var applicationId string
 
-	applicationId = chi.URLParam(r, "application-id")
+	applicationId = ctx.Param("application-id")
 
 	// ------------- Path parameter "endpoint-id" -------------
 	var endpointId string
 
-	endpointId = chi.URLParam(r, "endpoint-id")
+	endpointId = ctx.Param("endpoint-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseApplicationEndpoint(w, r, target, enterpriseId, applicationId, endpointId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseApplicationEndpoint(ctx, target, enterpriseId, applicationId, endpointId)
+	return err
 }
 
-// GetEnterprisesEnterpriseApplicationEndpoint operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplicationEndpoint(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseApplicationEndpoint converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplicationEndpoint(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "application-id" -------------
 	var applicationId string
 
-	applicationId = chi.URLParam(r, "application-id")
+	applicationId = ctx.Param("application-id")
 
 	// ------------- Path parameter "endpoint-id" -------------
 	var endpointId string
 
-	endpointId = chi.URLParam(r, "endpoint-id")
+	endpointId = ctx.Param("endpoint-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseApplicationEndpoint(w, r, target, enterpriseId, applicationId, endpointId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseApplicationEndpoint(ctx, target, enterpriseId, applicationId, endpointId)
+	return err
 }
 
-// PostEnterprisesEnterpriseApplicationEndpoint operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseApplicationEndpoint(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseApplicationEndpoint converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseApplicationEndpoint(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "application-id" -------------
 	var applicationId string
 
-	applicationId = chi.URLParam(r, "application-id")
+	applicationId = ctx.Param("application-id")
 
 	// ------------- Path parameter "endpoint-id" -------------
 	var endpointId string
 
-	endpointId = chi.URLParam(r, "endpoint-id")
+	endpointId = ctx.Param("endpoint-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseApplicationEndpoint(w, r, target, enterpriseId, applicationId, endpointId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseApplicationEndpoint(ctx, target, enterpriseId, applicationId, endpointId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseApplicationEndpointMbr operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseApplicationEndpointMbr(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseApplicationEndpointMbr converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseApplicationEndpointMbr(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "application-id" -------------
 	var applicationId string
 
-	applicationId = chi.URLParam(r, "application-id")
+	applicationId = ctx.Param("application-id")
 
 	// ------------- Path parameter "endpoint-id" -------------
 	var endpointId string
 
-	endpointId = chi.URLParam(r, "endpoint-id")
+	endpointId = ctx.Param("endpoint-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseApplicationEndpointMbr(w, r, target, enterpriseId, applicationId, endpointId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseApplicationEndpointMbr(ctx, target, enterpriseId, applicationId, endpointId)
+	return err
 }
 
-// GetEnterprisesEnterpriseApplicationEndpointMbr operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplicationEndpointMbr(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseApplicationEndpointMbr converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplicationEndpointMbr(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "application-id" -------------
 	var applicationId string
 
-	applicationId = chi.URLParam(r, "application-id")
+	applicationId = ctx.Param("application-id")
 
 	// ------------- Path parameter "endpoint-id" -------------
 	var endpointId string
 
-	endpointId = chi.URLParam(r, "endpoint-id")
+	endpointId = ctx.Param("endpoint-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseApplicationEndpointMbr(w, r, target, enterpriseId, applicationId, endpointId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseApplicationEndpointMbr(ctx, target, enterpriseId, applicationId, endpointId)
+	return err
 }
 
-// PostEnterprisesEnterpriseApplicationEndpointMbr operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseApplicationEndpointMbr(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseApplicationEndpointMbr converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseApplicationEndpointMbr(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "application-id" -------------
 	var applicationId string
 
-	applicationId = chi.URLParam(r, "application-id")
+	applicationId = ctx.Param("application-id")
 
 	// ------------- Path parameter "endpoint-id" -------------
 	var endpointId string
 
-	endpointId = chi.URLParam(r, "endpoint-id")
+	endpointId = ctx.Param("endpoint-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseApplicationEndpointMbr(w, r, target, enterpriseId, applicationId, endpointId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseApplicationEndpointMbr(ctx, target, enterpriseId, applicationId, endpointId)
+	return err
 }
 
-// GetEnterprisesEnterpriseConnectivityServiceList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseConnectivityServiceList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseConnectivityServiceList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseConnectivityServiceList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseConnectivityServiceList(w, r, target, enterpriseId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseConnectivityServiceList(ctx, target, enterpriseId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseConnectivityService operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseConnectivityService(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseConnectivityService converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseConnectivityService(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "connectivity-service" -------------
 	var connectivityService string
 
-	connectivityService = chi.URLParam(r, "connectivity-service")
+	connectivityService = ctx.Param("connectivity-service")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseConnectivityService(w, r, target, enterpriseId, connectivityService)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseConnectivityService(ctx, target, enterpriseId, connectivityService)
+	return err
 }
 
-// GetEnterprisesEnterpriseConnectivityService operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseConnectivityService(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseConnectivityService converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseConnectivityService(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "connectivity-service" -------------
 	var connectivityService string
 
-	connectivityService = chi.URLParam(r, "connectivity-service")
+	connectivityService = ctx.Param("connectivity-service")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseConnectivityService(w, r, target, enterpriseId, connectivityService)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseConnectivityService(ctx, target, enterpriseId, connectivityService)
+	return err
 }
 
-// PostEnterprisesEnterpriseConnectivityService operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseConnectivityService(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseConnectivityService converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseConnectivityService(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "connectivity-service" -------------
 	var connectivityService string
 
-	connectivityService = chi.URLParam(r, "connectivity-service")
+	connectivityService = ctx.Param("connectivity-service")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseConnectivityService(w, r, target, enterpriseId, connectivityService)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseConnectivityService(ctx, target, enterpriseId, connectivityService)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteList(w, r, target, enterpriseId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteList(ctx, target, enterpriseId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSite operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSite(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSite converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSite(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSite(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSite(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSite operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSite(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSite converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSite(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSite(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSite(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSite operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSite(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSite converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSite(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSite(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSite(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteDeviceList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteDeviceList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteDeviceList(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteDeviceList(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteDeviceGroupList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroupList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteDeviceGroupList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroupList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteDeviceGroupList(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteDeviceGroupList(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteDeviceGroup operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteDeviceGroup(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteDeviceGroup converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteDeviceGroup(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-group-id" -------------
 	var deviceGroupId string
 
-	deviceGroupId = chi.URLParam(r, "device-group-id")
+	deviceGroupId = ctx.Param("device-group-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteDeviceGroup(w, r, target, enterpriseId, siteId, deviceGroupId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteDeviceGroup(ctx, target, enterpriseId, siteId, deviceGroupId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteDeviceGroup operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroup(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteDeviceGroup converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroup(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-group-id" -------------
 	var deviceGroupId string
 
-	deviceGroupId = chi.URLParam(r, "device-group-id")
+	deviceGroupId = ctx.Param("device-group-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteDeviceGroup(w, r, target, enterpriseId, siteId, deviceGroupId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteDeviceGroup(ctx, target, enterpriseId, siteId, deviceGroupId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteDeviceGroup operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteDeviceGroup(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteDeviceGroup converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteDeviceGroup(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-group-id" -------------
 	var deviceGroupId string
 
-	deviceGroupId = chi.URLParam(r, "device-group-id")
+	deviceGroupId = ctx.Param("device-group-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteDeviceGroup(w, r, target, enterpriseId, siteId, deviceGroupId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteDeviceGroup(ctx, target, enterpriseId, siteId, deviceGroupId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteDeviceGroupDeviceList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroupDeviceList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteDeviceGroupDeviceList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroupDeviceList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-group-id" -------------
 	var deviceGroupId string
 
-	deviceGroupId = chi.URLParam(r, "device-group-id")
+	deviceGroupId = ctx.Param("device-group-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteDeviceGroupDeviceList(w, r, target, enterpriseId, siteId, deviceGroupId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteDeviceGroupDeviceList(ctx, target, enterpriseId, siteId, deviceGroupId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteDeviceGroupDevice operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteDeviceGroupDevice(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteDeviceGroupDevice converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteDeviceGroupDevice(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-group-id" -------------
 	var deviceGroupId string
 
-	deviceGroupId = chi.URLParam(r, "device-group-id")
+	deviceGroupId = ctx.Param("device-group-id")
 
 	// ------------- Path parameter "device-id" -------------
 	var deviceId string
 
-	deviceId = chi.URLParam(r, "device-id")
+	deviceId = ctx.Param("device-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteDeviceGroupDevice(w, r, target, enterpriseId, siteId, deviceGroupId, deviceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteDeviceGroupDevice(ctx, target, enterpriseId, siteId, deviceGroupId, deviceId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteDeviceGroupDevice operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroupDevice(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteDeviceGroupDevice converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroupDevice(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-group-id" -------------
 	var deviceGroupId string
 
-	deviceGroupId = chi.URLParam(r, "device-group-id")
+	deviceGroupId = ctx.Param("device-group-id")
 
 	// ------------- Path parameter "device-id" -------------
 	var deviceId string
 
-	deviceId = chi.URLParam(r, "device-id")
+	deviceId = ctx.Param("device-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteDeviceGroupDevice(w, r, target, enterpriseId, siteId, deviceGroupId, deviceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteDeviceGroupDevice(ctx, target, enterpriseId, siteId, deviceGroupId, deviceId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteDeviceGroupDevice operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteDeviceGroupDevice(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteDeviceGroupDevice converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteDeviceGroupDevice(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-group-id" -------------
 	var deviceGroupId string
 
-	deviceGroupId = chi.URLParam(r, "device-group-id")
+	deviceGroupId = ctx.Param("device-group-id")
 
 	// ------------- Path parameter "device-id" -------------
 	var deviceId string
 
-	deviceId = chi.URLParam(r, "device-id")
+	deviceId = ctx.Param("device-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteDeviceGroupDevice(w, r, target, enterpriseId, siteId, deviceGroupId, deviceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteDeviceGroupDevice(ctx, target, enterpriseId, siteId, deviceGroupId, deviceId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteDeviceGroupMbr operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteDeviceGroupMbr(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteDeviceGroupMbr converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteDeviceGroupMbr(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-group-id" -------------
 	var deviceGroupId string
 
-	deviceGroupId = chi.URLParam(r, "device-group-id")
+	deviceGroupId = ctx.Param("device-group-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteDeviceGroupMbr(w, r, target, enterpriseId, siteId, deviceGroupId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteDeviceGroupMbr(ctx, target, enterpriseId, siteId, deviceGroupId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteDeviceGroupMbr operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroupMbr(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteDeviceGroupMbr converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroupMbr(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-group-id" -------------
 	var deviceGroupId string
 
-	deviceGroupId = chi.URLParam(r, "device-group-id")
+	deviceGroupId = ctx.Param("device-group-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteDeviceGroupMbr(w, r, target, enterpriseId, siteId, deviceGroupId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteDeviceGroupMbr(ctx, target, enterpriseId, siteId, deviceGroupId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteDeviceGroupMbr operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteDeviceGroupMbr(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteDeviceGroupMbr converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteDeviceGroupMbr(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-group-id" -------------
 	var deviceGroupId string
 
-	deviceGroupId = chi.URLParam(r, "device-group-id")
+	deviceGroupId = ctx.Param("device-group-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteDeviceGroupMbr(w, r, target, enterpriseId, siteId, deviceGroupId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteDeviceGroupMbr(ctx, target, enterpriseId, siteId, deviceGroupId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteDevice operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteDevice(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteDevice converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteDevice(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-id" -------------
 	var deviceId string
 
-	deviceId = chi.URLParam(r, "device-id")
+	deviceId = ctx.Param("device-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteDevice(w, r, target, enterpriseId, siteId, deviceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteDevice(ctx, target, enterpriseId, siteId, deviceId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteDevice operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDevice(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteDevice converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDevice(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-id" -------------
 	var deviceId string
 
-	deviceId = chi.URLParam(r, "device-id")
+	deviceId = ctx.Param("device-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteDevice(w, r, target, enterpriseId, siteId, deviceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteDevice(ctx, target, enterpriseId, siteId, deviceId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteDevice operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteDevice(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteDevice converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteDevice(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "device-id" -------------
 	var deviceId string
 
-	deviceId = chi.URLParam(r, "device-id")
+	deviceId = ctx.Param("device-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteDevice(w, r, target, enterpriseId, siteId, deviceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteDevice(ctx, target, enterpriseId, siteId, deviceId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteImsiDefinition operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteImsiDefinition(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteImsiDefinition converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteImsiDefinition(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteImsiDefinition(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteImsiDefinition(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteImsiDefinition operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteImsiDefinition(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteImsiDefinition converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteImsiDefinition(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteImsiDefinition(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteImsiDefinition(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteImsiDefinition operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteImsiDefinition(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteImsiDefinition converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteImsiDefinition(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteImsiDefinition(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteImsiDefinition(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteIpDomainList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteIpDomainList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteIpDomainList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteIpDomainList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteIpDomainList(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteIpDomainList(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteIpDomain operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteIpDomain(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteIpDomain converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteIpDomain(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "ip-domain-id" -------------
 	var ipDomainId string
 
-	ipDomainId = chi.URLParam(r, "ip-domain-id")
+	ipDomainId = ctx.Param("ip-domain-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteIpDomain(w, r, target, enterpriseId, siteId, ipDomainId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteIpDomain(ctx, target, enterpriseId, siteId, ipDomainId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteIpDomain operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteIpDomain(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteIpDomain converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteIpDomain(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "ip-domain-id" -------------
 	var ipDomainId string
 
-	ipDomainId = chi.URLParam(r, "ip-domain-id")
+	ipDomainId = ctx.Param("ip-domain-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteIpDomain(w, r, target, enterpriseId, siteId, ipDomainId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteIpDomain(ctx, target, enterpriseId, siteId, ipDomainId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteIpDomain operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteIpDomain(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteIpDomain converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteIpDomain(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "ip-domain-id" -------------
 	var ipDomainId string
 
-	ipDomainId = chi.URLParam(r, "ip-domain-id")
+	ipDomainId = ctx.Param("ip-domain-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteIpDomain(w, r, target, enterpriseId, siteId, ipDomainId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteIpDomain(ctx, target, enterpriseId, siteId, ipDomainId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteMonitoring operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteMonitoring(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteMonitoring converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteMonitoring(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteMonitoring(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteMonitoring(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteMonitoring operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteMonitoring(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteMonitoring converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteMonitoring(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteMonitoring(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteMonitoring(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteMonitoring operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteMonitoring(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteMonitoring converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteMonitoring(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteMonitoring(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteMonitoring(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteMonitoringEdgeDeviceList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteMonitoringEdgeDeviceList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteMonitoringEdgeDeviceList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteMonitoringEdgeDeviceList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteMonitoringEdgeDeviceList(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteMonitoringEdgeDeviceList(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteMonitoringEdgeDevice operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteMonitoringEdgeDevice(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteMonitoringEdgeDevice converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteMonitoringEdgeDevice(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "edge-device-id" -------------
 	var edgeDeviceId string
 
-	edgeDeviceId = chi.URLParam(r, "edge-device-id")
+	edgeDeviceId = ctx.Param("edge-device-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteMonitoringEdgeDevice(w, r, target, enterpriseId, siteId, edgeDeviceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteMonitoringEdgeDevice(ctx, target, enterpriseId, siteId, edgeDeviceId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteMonitoringEdgeDevice operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteMonitoringEdgeDevice(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteMonitoringEdgeDevice converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteMonitoringEdgeDevice(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "edge-device-id" -------------
 	var edgeDeviceId string
 
-	edgeDeviceId = chi.URLParam(r, "edge-device-id")
+	edgeDeviceId = ctx.Param("edge-device-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteMonitoringEdgeDevice(w, r, target, enterpriseId, siteId, edgeDeviceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteMonitoringEdgeDevice(ctx, target, enterpriseId, siteId, edgeDeviceId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteMonitoringEdgeDevice operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteMonitoringEdgeDevice(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteMonitoringEdgeDevice converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteMonitoringEdgeDevice(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "edge-device-id" -------------
 	var edgeDeviceId string
 
-	edgeDeviceId = chi.URLParam(r, "edge-device-id")
+	edgeDeviceId = ctx.Param("edge-device-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteMonitoringEdgeDevice(w, r, target, enterpriseId, siteId, edgeDeviceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteMonitoringEdgeDevice(ctx, target, enterpriseId, siteId, edgeDeviceId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSimCardList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSimCardList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSimCardList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSimCardList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSimCardList(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSimCardList(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteSimCard operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSimCard(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteSimCard converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSimCard(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "sim-id" -------------
 	var simId string
 
-	simId = chi.URLParam(r, "sim-id")
+	simId = ctx.Param("sim-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteSimCard(w, r, target, enterpriseId, siteId, simId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteSimCard(ctx, target, enterpriseId, siteId, simId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSimCard operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSimCard(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSimCard converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSimCard(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "sim-id" -------------
 	var simId string
 
-	simId = chi.URLParam(r, "sim-id")
+	simId = ctx.Param("sim-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSimCard(w, r, target, enterpriseId, siteId, simId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSimCard(ctx, target, enterpriseId, siteId, simId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteSimCard operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSimCard(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteSimCard converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSimCard(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "sim-id" -------------
 	var simId string
 
-	simId = chi.URLParam(r, "sim-id")
+	simId = ctx.Param("sim-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteSimCard(w, r, target, enterpriseId, siteId, simId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteSimCard(ctx, target, enterpriseId, siteId, simId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSliceList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSliceList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSliceList(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSliceList(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteSlice operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSlice(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteSlice converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSlice(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteSlice(w, r, target, enterpriseId, siteId, sliceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteSlice(ctx, target, enterpriseId, siteId, sliceId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSlice operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSlice(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSlice converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSlice(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSlice(w, r, target, enterpriseId, siteId, sliceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSlice(ctx, target, enterpriseId, siteId, sliceId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteSlice operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSlice(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteSlice converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSlice(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteSlice(w, r, target, enterpriseId, siteId, sliceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteSlice(ctx, target, enterpriseId, siteId, sliceId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSliceDeviceGroupList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceDeviceGroupList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSliceDeviceGroupList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceDeviceGroupList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSliceDeviceGroupList(w, r, target, enterpriseId, siteId, sliceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSliceDeviceGroupList(ctx, target, enterpriseId, siteId, sliceId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteSliceDeviceGroup operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSliceDeviceGroup(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteSliceDeviceGroup converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSliceDeviceGroup(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
 	// ------------- Path parameter "device-group" -------------
 	var deviceGroup string
 
-	deviceGroup = chi.URLParam(r, "device-group")
+	deviceGroup = ctx.Param("device-group")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteSliceDeviceGroup(w, r, target, enterpriseId, siteId, sliceId, deviceGroup)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteSliceDeviceGroup(ctx, target, enterpriseId, siteId, sliceId, deviceGroup)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSliceDeviceGroup operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceDeviceGroup(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSliceDeviceGroup converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceDeviceGroup(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
 	// ------------- Path parameter "device-group" -------------
 	var deviceGroup string
 
-	deviceGroup = chi.URLParam(r, "device-group")
+	deviceGroup = ctx.Param("device-group")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSliceDeviceGroup(w, r, target, enterpriseId, siteId, sliceId, deviceGroup)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSliceDeviceGroup(ctx, target, enterpriseId, siteId, sliceId, deviceGroup)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteSliceDeviceGroup operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSliceDeviceGroup(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteSliceDeviceGroup converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSliceDeviceGroup(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
 	// ------------- Path parameter "device-group" -------------
 	var deviceGroup string
 
-	deviceGroup = chi.URLParam(r, "device-group")
+	deviceGroup = ctx.Param("device-group")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteSliceDeviceGroup(w, r, target, enterpriseId, siteId, sliceId, deviceGroup)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteSliceDeviceGroup(ctx, target, enterpriseId, siteId, sliceId, deviceGroup)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSliceFilterList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceFilterList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSliceFilterList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceFilterList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSliceFilterList(w, r, target, enterpriseId, siteId, sliceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSliceFilterList(ctx, target, enterpriseId, siteId, sliceId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteSliceFilter operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSliceFilter(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteSliceFilter converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSliceFilter(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
 	// ------------- Path parameter "application" -------------
 	var application string
 
-	application = chi.URLParam(r, "application")
+	application = ctx.Param("application")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteSliceFilter(w, r, target, enterpriseId, siteId, sliceId, application)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteSliceFilter(ctx, target, enterpriseId, siteId, sliceId, application)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSliceFilter operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceFilter(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSliceFilter converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceFilter(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
 	// ------------- Path parameter "application" -------------
 	var application string
 
-	application = chi.URLParam(r, "application")
+	application = ctx.Param("application")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSliceFilter(w, r, target, enterpriseId, siteId, sliceId, application)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSliceFilter(ctx, target, enterpriseId, siteId, sliceId, application)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteSliceFilter operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSliceFilter(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteSliceFilter converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSliceFilter(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
 	// ------------- Path parameter "application" -------------
 	var application string
 
-	application = chi.URLParam(r, "application")
+	application = ctx.Param("application")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteSliceFilter(w, r, target, enterpriseId, siteId, sliceId, application)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteSliceFilter(ctx, target, enterpriseId, siteId, sliceId, application)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteSliceMbr operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSliceMbr(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteSliceMbr converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSliceMbr(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteSliceMbr(w, r, target, enterpriseId, siteId, sliceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteSliceMbr(ctx, target, enterpriseId, siteId, sliceId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSliceMbr operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceMbr(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSliceMbr converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceMbr(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSliceMbr(w, r, target, enterpriseId, siteId, sliceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSliceMbr(ctx, target, enterpriseId, siteId, sliceId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteSliceMbr operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSliceMbr(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteSliceMbr converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSliceMbr(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteSliceMbr(w, r, target, enterpriseId, siteId, sliceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteSliceMbr(ctx, target, enterpriseId, siteId, sliceId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSlicePriorityTrafficRuleList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSlicePriorityTrafficRuleList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSlicePriorityTrafficRuleList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSlicePriorityTrafficRuleList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSlicePriorityTrafficRuleList(w, r, target, enterpriseId, siteId, sliceId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSlicePriorityTrafficRuleList(ctx, target, enterpriseId, siteId, sliceId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteSlicePriorityTrafficRule operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSlicePriorityTrafficRule(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteSlicePriorityTrafficRule converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSlicePriorityTrafficRule(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
 	// ------------- Path parameter "priority-traffic-rule-id" -------------
 	var priorityTrafficRuleId string
 
-	priorityTrafficRuleId = chi.URLParam(r, "priority-traffic-rule-id")
+	priorityTrafficRuleId = ctx.Param("priority-traffic-rule-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteSlicePriorityTrafficRule(w, r, target, enterpriseId, siteId, sliceId, priorityTrafficRuleId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteSlicePriorityTrafficRule(ctx, target, enterpriseId, siteId, sliceId, priorityTrafficRuleId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSlicePriorityTrafficRule operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSlicePriorityTrafficRule(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSlicePriorityTrafficRule converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSlicePriorityTrafficRule(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
 	// ------------- Path parameter "priority-traffic-rule-id" -------------
 	var priorityTrafficRuleId string
 
-	priorityTrafficRuleId = chi.URLParam(r, "priority-traffic-rule-id")
+	priorityTrafficRuleId = ctx.Param("priority-traffic-rule-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSlicePriorityTrafficRule(w, r, target, enterpriseId, siteId, sliceId, priorityTrafficRuleId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSlicePriorityTrafficRule(ctx, target, enterpriseId, siteId, sliceId, priorityTrafficRuleId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteSlicePriorityTrafficRule operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSlicePriorityTrafficRule(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteSlicePriorityTrafficRule converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSlicePriorityTrafficRule(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "slice-id" -------------
 	var sliceId string
 
-	sliceId = chi.URLParam(r, "slice-id")
+	sliceId = ctx.Param("slice-id")
 
 	// ------------- Path parameter "priority-traffic-rule-id" -------------
 	var priorityTrafficRuleId string
 
-	priorityTrafficRuleId = chi.URLParam(r, "priority-traffic-rule-id")
+	priorityTrafficRuleId = ctx.Param("priority-traffic-rule-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteSlicePriorityTrafficRule(w, r, target, enterpriseId, siteId, sliceId, priorityTrafficRuleId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteSlicePriorityTrafficRule(ctx, target, enterpriseId, siteId, sliceId, priorityTrafficRuleId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSmallCellList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSmallCellList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSmallCellList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSmallCellList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSmallCellList(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSmallCellList(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteSmallCell operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSmallCell(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteSmallCell converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSmallCell(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "small-cell-id" -------------
 	var smallCellId string
 
-	smallCellId = chi.URLParam(r, "small-cell-id")
+	smallCellId = ctx.Param("small-cell-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteSmallCell(w, r, target, enterpriseId, siteId, smallCellId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteSmallCell(ctx, target, enterpriseId, siteId, smallCellId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteSmallCell operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSmallCell(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteSmallCell converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSmallCell(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "small-cell-id" -------------
 	var smallCellId string
 
-	smallCellId = chi.URLParam(r, "small-cell-id")
+	smallCellId = ctx.Param("small-cell-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteSmallCell(w, r, target, enterpriseId, siteId, smallCellId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteSmallCell(ctx, target, enterpriseId, siteId, smallCellId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteSmallCell operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSmallCell(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteSmallCell converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSmallCell(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "small-cell-id" -------------
 	var smallCellId string
 
-	smallCellId = chi.URLParam(r, "small-cell-id")
+	smallCellId = ctx.Param("small-cell-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteSmallCell(w, r, target, enterpriseId, siteId, smallCellId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteSmallCell(ctx, target, enterpriseId, siteId, smallCellId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteUpfList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteUpfList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteUpfList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteUpfList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteUpfList(w, r, target, enterpriseId, siteId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteUpfList(ctx, target, enterpriseId, siteId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseSiteUpf operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteUpf(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseSiteUpf converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteUpf(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "upf-id" -------------
 	var upfId string
 
-	upfId = chi.URLParam(r, "upf-id")
+	upfId = ctx.Param("upf-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseSiteUpf(w, r, target, enterpriseId, siteId, upfId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseSiteUpf(ctx, target, enterpriseId, siteId, upfId)
+	return err
 }
 
-// GetEnterprisesEnterpriseSiteUpf operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteUpf(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseSiteUpf converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteUpf(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "upf-id" -------------
 	var upfId string
 
-	upfId = chi.URLParam(r, "upf-id")
+	upfId = ctx.Param("upf-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseSiteUpf(w, r, target, enterpriseId, siteId, upfId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseSiteUpf(ctx, target, enterpriseId, siteId, upfId)
+	return err
 }
 
-// PostEnterprisesEnterpriseSiteUpf operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteUpf(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseSiteUpf converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteUpf(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "site-id" -------------
 	var siteId string
 
-	siteId = chi.URLParam(r, "site-id")
+	siteId = ctx.Param("site-id")
 
 	// ------------- Path parameter "upf-id" -------------
 	var upfId string
 
-	upfId = chi.URLParam(r, "upf-id")
+	upfId = ctx.Param("upf-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseSiteUpf(w, r, target, enterpriseId, siteId, upfId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseSiteUpf(ctx, target, enterpriseId, siteId, upfId)
+	return err
 }
 
-// GetEnterprisesEnterpriseTemplateList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseTemplateList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseTemplateList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseTemplateList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseTemplateList(w, r, target, enterpriseId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseTemplateList(ctx, target, enterpriseId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseTemplate operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseTemplate(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseTemplate converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseTemplate(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "template-id" -------------
 	var templateId string
 
-	templateId = chi.URLParam(r, "template-id")
+	templateId = ctx.Param("template-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseTemplate(w, r, target, enterpriseId, templateId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseTemplate(ctx, target, enterpriseId, templateId)
+	return err
 }
 
-// GetEnterprisesEnterpriseTemplate operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseTemplate(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseTemplate converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseTemplate(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "template-id" -------------
 	var templateId string
 
-	templateId = chi.URLParam(r, "template-id")
+	templateId = ctx.Param("template-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseTemplate(w, r, target, enterpriseId, templateId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseTemplate(ctx, target, enterpriseId, templateId)
+	return err
 }
 
-// PostEnterprisesEnterpriseTemplate operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseTemplate(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseTemplate converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseTemplate(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "template-id" -------------
 	var templateId string
 
-	templateId = chi.URLParam(r, "template-id")
+	templateId = ctx.Param("template-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseTemplate(w, r, target, enterpriseId, templateId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseTemplate(ctx, target, enterpriseId, templateId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseTemplateMbr operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseTemplateMbr(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseTemplateMbr converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseTemplateMbr(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "template-id" -------------
 	var templateId string
 
-	templateId = chi.URLParam(r, "template-id")
+	templateId = ctx.Param("template-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseTemplateMbr(w, r, target, enterpriseId, templateId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseTemplateMbr(ctx, target, enterpriseId, templateId)
+	return err
 }
 
-// GetEnterprisesEnterpriseTemplateMbr operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseTemplateMbr(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseTemplateMbr converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseTemplateMbr(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "template-id" -------------
 	var templateId string
 
-	templateId = chi.URLParam(r, "template-id")
+	templateId = ctx.Param("template-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseTemplateMbr(w, r, target, enterpriseId, templateId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseTemplateMbr(ctx, target, enterpriseId, templateId)
+	return err
 }
 
-// PostEnterprisesEnterpriseTemplateMbr operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseTemplateMbr(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseTemplateMbr converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseTemplateMbr(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "template-id" -------------
 	var templateId string
 
-	templateId = chi.URLParam(r, "template-id")
+	templateId = ctx.Param("template-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseTemplateMbr(w, r, target, enterpriseId, templateId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseTemplateMbr(ctx, target, enterpriseId, templateId)
+	return err
 }
 
-// GetEnterprisesEnterpriseTrafficClassList operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseTrafficClassList(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseTrafficClassList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseTrafficClassList(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseTrafficClassList(w, r, target, enterpriseId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseTrafficClassList(ctx, target, enterpriseId)
+	return err
 }
 
-// DeleteEnterprisesEnterpriseTrafficClass operation middleware
-func (siw *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseTrafficClass(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// DeleteEnterprisesEnterpriseTrafficClass converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseTrafficClass(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "traffic-class-id" -------------
 	var trafficClassId string
 
-	trafficClassId = chi.URLParam(r, "traffic-class-id")
+	trafficClassId = ctx.Param("traffic-class-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeleteEnterprisesEnterpriseTrafficClass(w, r, target, enterpriseId, trafficClassId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.DeleteEnterprisesEnterpriseTrafficClass(ctx, target, enterpriseId, trafficClassId)
+	return err
 }
 
-// GetEnterprisesEnterpriseTrafficClass operation middleware
-func (siw *ServerInterfaceWrapper) GetEnterprisesEnterpriseTrafficClass(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// GetEnterprisesEnterpriseTrafficClass converts echo context to params.
+func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseTrafficClass(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "traffic-class-id" -------------
 	var trafficClassId string
 
-	trafficClassId = chi.URLParam(r, "traffic-class-id")
+	trafficClassId = ctx.Param("traffic-class-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetEnterprisesEnterpriseTrafficClass(w, r, target, enterpriseId, trafficClassId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetEnterprisesEnterpriseTrafficClass(ctx, target, enterpriseId, trafficClassId)
+	return err
 }
 
-// PostEnterprisesEnterpriseTrafficClass operation middleware
-func (siw *ServerInterfaceWrapper) PostEnterprisesEnterpriseTrafficClass(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
+// PostEnterprisesEnterpriseTrafficClass converts echo context to params.
+func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseTrafficClass(ctx echo.Context) error {
 	var err error
-
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = chi.URLParam(r, "target")
+	target = ctx.Param("target")
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
 
-	enterpriseId = chi.URLParam(r, "enterprise-id")
+	enterpriseId = ctx.Param("enterprise-id")
 
 	// ------------- Path parameter "traffic-class-id" -------------
 	var trafficClassId string
 
-	trafficClassId = chi.URLParam(r, "traffic-class-id")
+	trafficClassId = ctx.Param("traffic-class-id")
 
-	var handler = func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PostEnterprisesEnterpriseTrafficClass(w, r, target, enterpriseId, trafficClassId)
-	}
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler(w, r.WithContext(ctx))
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.PostEnterprisesEnterpriseTrafficClass(ctx, target, enterpriseId, trafficClassId)
+	return err
 }
 
-// Handler creates http.Handler with routing matching OpenAPI spec.
-func Handler(si ServerInterface) http.Handler {
-	return HandlerWithOptions(si, ChiServerOptions{})
+// This is a simple interface which specifies echo.Route addition functions which
+// are present on both echo.Echo and echo.Group, since we want to allow using
+// either of them for path registration
+type EchoRouter interface {
+	CONNECT(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc) *echo.Route
+	DELETE(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc) *echo.Route
+	GET(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc) *echo.Route
+	HEAD(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc) *echo.Route
+	OPTIONS(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc) *echo.Route
+	PATCH(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc) *echo.Route
+	POST(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc) *echo.Route
+	PUT(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc) *echo.Route
+	TRACE(path string, h echo.HandlerFunc, m ...echo.MiddlewareFunc) *echo.Route
 }
 
-type ChiServerOptions struct {
-	BaseURL     string
-	BaseRouter  chi.Router
-	Middlewares []MiddlewareFunc
+// RegisterHandlers adds each server route to the EchoRouter.
+func RegisterHandlers(router EchoRouter, si ServerInterface) {
+	RegisterHandlersWithBaseURL(router, si, "")
 }
 
-// HandlerFromMux creates http.Handler with routing matching OpenAPI spec based on the provided mux.
-func HandlerFromMux(si ServerInterface, r chi.Router) http.Handler {
-	return HandlerWithOptions(si, ChiServerOptions{
-		BaseRouter: r,
-	})
-}
+// Registers handlers, and prepends BaseURL to the paths, so that the paths
+// can be served under a prefix.
+func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL string) {
 
-func HandlerFromMuxWithBaseURL(si ServerInterface, r chi.Router, baseURL string) http.Handler {
-	return HandlerWithOptions(si, ChiServerOptions{
-		BaseURL:    baseURL,
-		BaseRouter: r,
-	})
-}
-
-// HandlerWithOptions creates http.Handler with additional options
-func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handler {
-	r := options.BaseRouter
-
-	if r == nil {
-		r = chi.NewRouter()
-	}
 	wrapper := ServerInterfaceWrapper{
-		Handler:            si,
-		HandlerMiddlewares: options.Middlewares,
+		Handler: si,
 	}
 
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/connectivity-services", wrapper.DeleteConnectivityServices)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/connectivity-services", wrapper.GetConnectivityServices)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/connectivity-services", wrapper.PostConnectivityServices)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/connectivity-services/connectivity-service", wrapper.GetConnectivityServicesConnectivityServiceList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/connectivity-services/connectivity-service/{connectivity-service-id}", wrapper.DeleteConnectivityServicesConnectivityService)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/connectivity-services/connectivity-service/{connectivity-service-id}", wrapper.GetConnectivityServicesConnectivityService)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/connectivity-services/connectivity-service/{connectivity-service-id}", wrapper.PostConnectivityServicesConnectivityService)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises", wrapper.DeleteEnterprises)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises", wrapper.GetEnterprises)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises", wrapper.PostEnterprises)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise", wrapper.GetEnterprisesEnterpriseList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}", wrapper.DeleteEnterprisesEnterprise)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}", wrapper.GetEnterprisesEnterprise)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}", wrapper.PostEnterprisesEnterprise)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application", wrapper.GetEnterprisesEnterpriseApplicationList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}", wrapper.DeleteEnterprisesEnterpriseApplication)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}", wrapper.GetEnterprisesEnterpriseApplication)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}", wrapper.PostEnterprisesEnterpriseApplication)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint", wrapper.GetEnterprisesEnterpriseApplicationEndpointList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}", wrapper.DeleteEnterprisesEnterpriseApplicationEndpoint)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}", wrapper.GetEnterprisesEnterpriseApplicationEndpoint)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}", wrapper.PostEnterprisesEnterpriseApplicationEndpoint)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr", wrapper.DeleteEnterprisesEnterpriseApplicationEndpointMbr)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr", wrapper.GetEnterprisesEnterpriseApplicationEndpointMbr)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr", wrapper.PostEnterprisesEnterpriseApplicationEndpointMbr)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/connectivity-service", wrapper.GetEnterprisesEnterpriseConnectivityServiceList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/connectivity-service/{connectivity-service}", wrapper.DeleteEnterprisesEnterpriseConnectivityService)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/connectivity-service/{connectivity-service}", wrapper.GetEnterprisesEnterpriseConnectivityService)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/connectivity-service/{connectivity-service}", wrapper.PostEnterprisesEnterpriseConnectivityService)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site", wrapper.GetEnterprisesEnterpriseSiteList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}", wrapper.DeleteEnterprisesEnterpriseSite)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}", wrapper.GetEnterprisesEnterpriseSite)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}", wrapper.PostEnterprisesEnterpriseSite)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device", wrapper.GetEnterprisesEnterpriseSiteDeviceList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group", wrapper.GetEnterprisesEnterpriseSiteDeviceGroupList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}", wrapper.DeleteEnterprisesEnterpriseSiteDeviceGroup)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}", wrapper.GetEnterprisesEnterpriseSiteDeviceGroup)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}", wrapper.PostEnterprisesEnterpriseSiteDeviceGroup)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device", wrapper.GetEnterprisesEnterpriseSiteDeviceGroupDeviceList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device/{device-id}", wrapper.DeleteEnterprisesEnterpriseSiteDeviceGroupDevice)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device/{device-id}", wrapper.GetEnterprisesEnterpriseSiteDeviceGroupDevice)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device/{device-id}", wrapper.PostEnterprisesEnterpriseSiteDeviceGroupDevice)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr", wrapper.DeleteEnterprisesEnterpriseSiteDeviceGroupMbr)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr", wrapper.GetEnterprisesEnterpriseSiteDeviceGroupMbr)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr", wrapper.PostEnterprisesEnterpriseSiteDeviceGroupMbr)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device/{device-id}", wrapper.DeleteEnterprisesEnterpriseSiteDevice)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device/{device-id}", wrapper.GetEnterprisesEnterpriseSiteDevice)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device/{device-id}", wrapper.PostEnterprisesEnterpriseSiteDevice)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition", wrapper.DeleteEnterprisesEnterpriseSiteImsiDefinition)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition", wrapper.GetEnterprisesEnterpriseSiteImsiDefinition)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition", wrapper.PostEnterprisesEnterpriseSiteImsiDefinition)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain", wrapper.GetEnterprisesEnterpriseSiteIpDomainList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain/{ip-domain-id}", wrapper.DeleteEnterprisesEnterpriseSiteIpDomain)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain/{ip-domain-id}", wrapper.GetEnterprisesEnterpriseSiteIpDomain)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain/{ip-domain-id}", wrapper.PostEnterprisesEnterpriseSiteIpDomain)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring", wrapper.DeleteEnterprisesEnterpriseSiteMonitoring)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring", wrapper.GetEnterprisesEnterpriseSiteMonitoring)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring", wrapper.PostEnterprisesEnterpriseSiteMonitoring)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device", wrapper.GetEnterprisesEnterpriseSiteMonitoringEdgeDeviceList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device/{edge-device-id}", wrapper.DeleteEnterprisesEnterpriseSiteMonitoringEdgeDevice)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device/{edge-device-id}", wrapper.GetEnterprisesEnterpriseSiteMonitoringEdgeDevice)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device/{edge-device-id}", wrapper.PostEnterprisesEnterpriseSiteMonitoringEdgeDevice)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card", wrapper.GetEnterprisesEnterpriseSiteSimCardList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card/{sim-id}", wrapper.DeleteEnterprisesEnterpriseSiteSimCard)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card/{sim-id}", wrapper.GetEnterprisesEnterpriseSiteSimCard)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card/{sim-id}", wrapper.PostEnterprisesEnterpriseSiteSimCard)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice", wrapper.GetEnterprisesEnterpriseSiteSliceList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}", wrapper.DeleteEnterprisesEnterpriseSiteSlice)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}", wrapper.GetEnterprisesEnterpriseSiteSlice)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}", wrapper.PostEnterprisesEnterpriseSiteSlice)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group", wrapper.GetEnterprisesEnterpriseSiteSliceDeviceGroupList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group/{device-group}", wrapper.DeleteEnterprisesEnterpriseSiteSliceDeviceGroup)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group/{device-group}", wrapper.GetEnterprisesEnterpriseSiteSliceDeviceGroup)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group/{device-group}", wrapper.PostEnterprisesEnterpriseSiteSliceDeviceGroup)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter", wrapper.GetEnterprisesEnterpriseSiteSliceFilterList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter/{application}", wrapper.DeleteEnterprisesEnterpriseSiteSliceFilter)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter/{application}", wrapper.GetEnterprisesEnterpriseSiteSliceFilter)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter/{application}", wrapper.PostEnterprisesEnterpriseSiteSliceFilter)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr", wrapper.DeleteEnterprisesEnterpriseSiteSliceMbr)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr", wrapper.GetEnterprisesEnterpriseSiteSliceMbr)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr", wrapper.PostEnterprisesEnterpriseSiteSliceMbr)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule", wrapper.GetEnterprisesEnterpriseSiteSlicePriorityTrafficRuleList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}", wrapper.DeleteEnterprisesEnterpriseSiteSlicePriorityTrafficRule)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}", wrapper.GetEnterprisesEnterpriseSiteSlicePriorityTrafficRule)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}", wrapper.PostEnterprisesEnterpriseSiteSlicePriorityTrafficRule)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell", wrapper.GetEnterprisesEnterpriseSiteSmallCellList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell/{small-cell-id}", wrapper.DeleteEnterprisesEnterpriseSiteSmallCell)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell/{small-cell-id}", wrapper.GetEnterprisesEnterpriseSiteSmallCell)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell/{small-cell-id}", wrapper.PostEnterprisesEnterpriseSiteSmallCell)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/upf", wrapper.GetEnterprisesEnterpriseSiteUpfList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/upf/{upf-id}", wrapper.DeleteEnterprisesEnterpriseSiteUpf)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/upf/{upf-id}", wrapper.GetEnterprisesEnterpriseSiteUpf)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/upf/{upf-id}", wrapper.PostEnterprisesEnterpriseSiteUpf)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template", wrapper.GetEnterprisesEnterpriseTemplateList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id}", wrapper.DeleteEnterprisesEnterpriseTemplate)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id}", wrapper.GetEnterprisesEnterpriseTemplate)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id}", wrapper.PostEnterprisesEnterpriseTemplate)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id}/mbr", wrapper.DeleteEnterprisesEnterpriseTemplateMbr)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id}/mbr", wrapper.GetEnterprisesEnterpriseTemplateMbr)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id}/mbr", wrapper.PostEnterprisesEnterpriseTemplateMbr)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/traffic-class", wrapper.GetEnterprisesEnterpriseTrafficClassList)
-	})
-	r.Group(func(r chi.Router) {
-		r.Delete(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/traffic-class/{traffic-class-id}", wrapper.DeleteEnterprisesEnterpriseTrafficClass)
-	})
-	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/traffic-class/{traffic-class-id}", wrapper.GetEnterprisesEnterpriseTrafficClass)
-	})
-	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/traffic-class/{traffic-class-id}", wrapper.PostEnterprisesEnterpriseTrafficClass)
-	})
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/connectivity-services", wrapper.DeleteConnectivityServices)
+	router.GET(baseURL+"/aether/v2.0.x/:target/connectivity-services", wrapper.GetConnectivityServices)
+	router.POST(baseURL+"/aether/v2.0.x/:target/connectivity-services", wrapper.PostConnectivityServices)
+	router.GET(baseURL+"/aether/v2.0.x/:target/connectivity-services/connectivity-service", wrapper.GetConnectivityServicesConnectivityServiceList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/connectivity-services/connectivity-service/:connectivity-service-id", wrapper.DeleteConnectivityServicesConnectivityService)
+	router.GET(baseURL+"/aether/v2.0.x/:target/connectivity-services/connectivity-service/:connectivity-service-id", wrapper.GetConnectivityServicesConnectivityService)
+	router.POST(baseURL+"/aether/v2.0.x/:target/connectivity-services/connectivity-service/:connectivity-service-id", wrapper.PostConnectivityServicesConnectivityService)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises", wrapper.DeleteEnterprises)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises", wrapper.GetEnterprises)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises", wrapper.PostEnterprises)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise", wrapper.GetEnterprisesEnterpriseList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id", wrapper.DeleteEnterprisesEnterprise)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id", wrapper.GetEnterprisesEnterprise)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id", wrapper.PostEnterprisesEnterprise)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/application", wrapper.GetEnterprisesEnterpriseApplicationList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/application/:application-id", wrapper.DeleteEnterprisesEnterpriseApplication)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/application/:application-id", wrapper.GetEnterprisesEnterpriseApplication)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/application/:application-id", wrapper.PostEnterprisesEnterpriseApplication)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/application/:application-id/endpoint", wrapper.GetEnterprisesEnterpriseApplicationEndpointList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/application/:application-id/endpoint/:endpoint-id", wrapper.DeleteEnterprisesEnterpriseApplicationEndpoint)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/application/:application-id/endpoint/:endpoint-id", wrapper.GetEnterprisesEnterpriseApplicationEndpoint)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/application/:application-id/endpoint/:endpoint-id", wrapper.PostEnterprisesEnterpriseApplicationEndpoint)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/application/:application-id/endpoint/:endpoint-id/mbr", wrapper.DeleteEnterprisesEnterpriseApplicationEndpointMbr)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/application/:application-id/endpoint/:endpoint-id/mbr", wrapper.GetEnterprisesEnterpriseApplicationEndpointMbr)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/application/:application-id/endpoint/:endpoint-id/mbr", wrapper.PostEnterprisesEnterpriseApplicationEndpointMbr)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/connectivity-service", wrapper.GetEnterprisesEnterpriseConnectivityServiceList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/connectivity-service/:connectivity-service", wrapper.DeleteEnterprisesEnterpriseConnectivityService)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/connectivity-service/:connectivity-service", wrapper.GetEnterprisesEnterpriseConnectivityService)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/connectivity-service/:connectivity-service", wrapper.PostEnterprisesEnterpriseConnectivityService)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site", wrapper.GetEnterprisesEnterpriseSiteList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id", wrapper.DeleteEnterprisesEnterpriseSite)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id", wrapper.GetEnterprisesEnterpriseSite)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id", wrapper.PostEnterprisesEnterpriseSite)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device", wrapper.GetEnterprisesEnterpriseSiteDeviceList)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device-group", wrapper.GetEnterprisesEnterpriseSiteDeviceGroupList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device-group/:device-group-id", wrapper.DeleteEnterprisesEnterpriseSiteDeviceGroup)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device-group/:device-group-id", wrapper.GetEnterprisesEnterpriseSiteDeviceGroup)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device-group/:device-group-id", wrapper.PostEnterprisesEnterpriseSiteDeviceGroup)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device-group/:device-group-id/device", wrapper.GetEnterprisesEnterpriseSiteDeviceGroupDeviceList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device-group/:device-group-id/device/:device-id", wrapper.DeleteEnterprisesEnterpriseSiteDeviceGroupDevice)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device-group/:device-group-id/device/:device-id", wrapper.GetEnterprisesEnterpriseSiteDeviceGroupDevice)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device-group/:device-group-id/device/:device-id", wrapper.PostEnterprisesEnterpriseSiteDeviceGroupDevice)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device-group/:device-group-id/mbr", wrapper.DeleteEnterprisesEnterpriseSiteDeviceGroupMbr)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device-group/:device-group-id/mbr", wrapper.GetEnterprisesEnterpriseSiteDeviceGroupMbr)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device-group/:device-group-id/mbr", wrapper.PostEnterprisesEnterpriseSiteDeviceGroupMbr)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device/:device-id", wrapper.DeleteEnterprisesEnterpriseSiteDevice)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device/:device-id", wrapper.GetEnterprisesEnterpriseSiteDevice)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/device/:device-id", wrapper.PostEnterprisesEnterpriseSiteDevice)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/imsi-definition", wrapper.DeleteEnterprisesEnterpriseSiteImsiDefinition)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/imsi-definition", wrapper.GetEnterprisesEnterpriseSiteImsiDefinition)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/imsi-definition", wrapper.PostEnterprisesEnterpriseSiteImsiDefinition)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/ip-domain", wrapper.GetEnterprisesEnterpriseSiteIpDomainList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/ip-domain/:ip-domain-id", wrapper.DeleteEnterprisesEnterpriseSiteIpDomain)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/ip-domain/:ip-domain-id", wrapper.GetEnterprisesEnterpriseSiteIpDomain)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/ip-domain/:ip-domain-id", wrapper.PostEnterprisesEnterpriseSiteIpDomain)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/monitoring", wrapper.DeleteEnterprisesEnterpriseSiteMonitoring)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/monitoring", wrapper.GetEnterprisesEnterpriseSiteMonitoring)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/monitoring", wrapper.PostEnterprisesEnterpriseSiteMonitoring)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/monitoring/edge-device", wrapper.GetEnterprisesEnterpriseSiteMonitoringEdgeDeviceList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/monitoring/edge-device/:edge-device-id", wrapper.DeleteEnterprisesEnterpriseSiteMonitoringEdgeDevice)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/monitoring/edge-device/:edge-device-id", wrapper.GetEnterprisesEnterpriseSiteMonitoringEdgeDevice)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/monitoring/edge-device/:edge-device-id", wrapper.PostEnterprisesEnterpriseSiteMonitoringEdgeDevice)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/sim-card", wrapper.GetEnterprisesEnterpriseSiteSimCardList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/sim-card/:sim-id", wrapper.DeleteEnterprisesEnterpriseSiteSimCard)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/sim-card/:sim-id", wrapper.GetEnterprisesEnterpriseSiteSimCard)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/sim-card/:sim-id", wrapper.PostEnterprisesEnterpriseSiteSimCard)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice", wrapper.GetEnterprisesEnterpriseSiteSliceList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id", wrapper.DeleteEnterprisesEnterpriseSiteSlice)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id", wrapper.GetEnterprisesEnterpriseSiteSlice)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id", wrapper.PostEnterprisesEnterpriseSiteSlice)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/device-group", wrapper.GetEnterprisesEnterpriseSiteSliceDeviceGroupList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/device-group/:device-group", wrapper.DeleteEnterprisesEnterpriseSiteSliceDeviceGroup)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/device-group/:device-group", wrapper.GetEnterprisesEnterpriseSiteSliceDeviceGroup)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/device-group/:device-group", wrapper.PostEnterprisesEnterpriseSiteSliceDeviceGroup)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/filter", wrapper.GetEnterprisesEnterpriseSiteSliceFilterList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/filter/:application", wrapper.DeleteEnterprisesEnterpriseSiteSliceFilter)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/filter/:application", wrapper.GetEnterprisesEnterpriseSiteSliceFilter)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/filter/:application", wrapper.PostEnterprisesEnterpriseSiteSliceFilter)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/mbr", wrapper.DeleteEnterprisesEnterpriseSiteSliceMbr)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/mbr", wrapper.GetEnterprisesEnterpriseSiteSliceMbr)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/mbr", wrapper.PostEnterprisesEnterpriseSiteSliceMbr)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/priority-traffic-rule", wrapper.GetEnterprisesEnterpriseSiteSlicePriorityTrafficRuleList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/priority-traffic-rule/:priority-traffic-rule-id", wrapper.DeleteEnterprisesEnterpriseSiteSlicePriorityTrafficRule)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/priority-traffic-rule/:priority-traffic-rule-id", wrapper.GetEnterprisesEnterpriseSiteSlicePriorityTrafficRule)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/slice/:slice-id/priority-traffic-rule/:priority-traffic-rule-id", wrapper.PostEnterprisesEnterpriseSiteSlicePriorityTrafficRule)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/small-cell", wrapper.GetEnterprisesEnterpriseSiteSmallCellList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/small-cell/:small-cell-id", wrapper.DeleteEnterprisesEnterpriseSiteSmallCell)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/small-cell/:small-cell-id", wrapper.GetEnterprisesEnterpriseSiteSmallCell)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/small-cell/:small-cell-id", wrapper.PostEnterprisesEnterpriseSiteSmallCell)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/upf", wrapper.GetEnterprisesEnterpriseSiteUpfList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/upf/:upf-id", wrapper.DeleteEnterprisesEnterpriseSiteUpf)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/upf/:upf-id", wrapper.GetEnterprisesEnterpriseSiteUpf)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/site/:site-id/upf/:upf-id", wrapper.PostEnterprisesEnterpriseSiteUpf)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/template", wrapper.GetEnterprisesEnterpriseTemplateList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/template/:template-id", wrapper.DeleteEnterprisesEnterpriseTemplate)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/template/:template-id", wrapper.GetEnterprisesEnterpriseTemplate)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/template/:template-id", wrapper.PostEnterprisesEnterpriseTemplate)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/template/:template-id/mbr", wrapper.DeleteEnterprisesEnterpriseTemplateMbr)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/template/:template-id/mbr", wrapper.GetEnterprisesEnterpriseTemplateMbr)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/template/:template-id/mbr", wrapper.PostEnterprisesEnterpriseTemplateMbr)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/traffic-class", wrapper.GetEnterprisesEnterpriseTrafficClassList)
+	router.DELETE(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/traffic-class/:traffic-class-id", wrapper.DeleteEnterprisesEnterpriseTrafficClass)
+	router.GET(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/traffic-class/:traffic-class-id", wrapper.GetEnterprisesEnterpriseTrafficClass)
+	router.POST(baseURL+"/aether/v2.0.x/:target/enterprises/enterprise/:enterprise-id/traffic-class/:traffic-class-id", wrapper.PostEnterprisesEnterpriseTrafficClass)
 
-	return r
 }
