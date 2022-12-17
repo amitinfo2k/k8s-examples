@@ -2,26 +2,27 @@ package main
 
 import (
     "fmt"
-    //   "encoding/json"
-    //   "fmt"
     "github.com/labstack/echo/v4"
     "github.com/labstack/echo/v4/middleware"
+    "github.com/onosproject/onos-lib-go/pkg/logging"
     "gorm.io/gorm"
 )
+
+var log = logging.GetLogger("model_0_0_0")
 
 type AetherServer struct {
    
    DB *gorm.DB
 
 }
-
-
-
 func (w *AetherServer) DeleteConnectivityServices(ctx echo.Context, target Target) error {
+    fmt.Println("Target ", target)
     panic("implement me")
 }
 
 func (w *AetherServer) GetConnectivityServices(ctx echo.Context, target Target) error {
+    fmt.Println("Target ", target)
+    log.Infof("GetConnectivityServices")
     panic("implement me")
 }
 

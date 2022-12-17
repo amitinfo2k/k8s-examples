@@ -334,7 +334,7 @@ func (w *ServerInterfaceWrapper) DeleteConnectivityServices(ctx echo.Context) er
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// Invoke the callback with all the unmarshalled arguments
 	err = w.Handler.DeleteConnectivityServices(ctx, target)
@@ -347,7 +347,7 @@ func (w *ServerInterfaceWrapper) GetConnectivityServices(ctx echo.Context) error
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// Invoke the callback with all the unmarshalled arguments
 	err = w.Handler.GetConnectivityServices(ctx, target)
@@ -359,8 +359,7 @@ func (w *ServerInterfaceWrapper) PostConnectivityServices(ctx echo.Context) erro
 	var err error
 	// ------------- Path parameter "target" -------------
 	var target Target
-
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// Invoke the callback with all the unmarshalled arguments
 	err = w.Handler.PostConnectivityServices(ctx, target)
@@ -373,7 +372,7 @@ func (w *ServerInterfaceWrapper) GetConnectivityServicesConnectivityServiceList(
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// Invoke the callback with all the unmarshalled arguments
 	err = w.Handler.GetConnectivityServicesConnectivityServiceList(ctx, target)
@@ -386,7 +385,7 @@ func (w *ServerInterfaceWrapper) DeleteConnectivityServicesConnectivityService(c
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "connectivity-service-id" -------------
 	var connectivityServiceId string
@@ -404,7 +403,7 @@ func (w *ServerInterfaceWrapper) GetConnectivityServicesConnectivityService(ctx 
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "connectivity-service-id" -------------
 	var connectivityServiceId string
@@ -422,7 +421,7 @@ func (w *ServerInterfaceWrapper) PostConnectivityServicesConnectivityService(ctx
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "connectivity-service-id" -------------
 	var connectivityServiceId string
@@ -440,7 +439,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprises(ctx echo.Context) error {
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// Invoke the callback with all the unmarshalled arguments
 	err = w.Handler.DeleteEnterprises(ctx, target)
@@ -453,7 +452,7 @@ func (w *ServerInterfaceWrapper) GetEnterprises(ctx echo.Context) error {
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// Invoke the callback with all the unmarshalled arguments
 	err = w.Handler.GetEnterprises(ctx, target)
@@ -466,7 +465,7 @@ func (w *ServerInterfaceWrapper) PostEnterprises(ctx echo.Context) error {
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// Invoke the callback with all the unmarshalled arguments
 	err = w.Handler.PostEnterprises(ctx, target)
@@ -479,7 +478,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseList(ctx echo.Context) 
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// Invoke the callback with all the unmarshalled arguments
 	err = w.Handler.GetEnterprisesEnterpriseList(ctx, target)
@@ -492,7 +491,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterprise(ctx echo.Context) e
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -510,7 +509,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterprise(ctx echo.Context) erro
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -528,7 +527,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterprise(ctx echo.Context) err
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -546,7 +545,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplicationList(ctx ech
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -564,7 +563,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseApplication(ctx echo
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -587,7 +586,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplication(ctx echo.Co
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -610,7 +609,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseApplication(ctx echo.C
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -633,7 +632,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplicationEndpointList
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -656,7 +655,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseApplicationEndpoint(
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -684,7 +683,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplicationEndpoint(ctx
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -712,7 +711,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseApplicationEndpoint(ct
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -740,7 +739,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseApplicationEndpointM
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -768,7 +767,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseApplicationEndpointMbr(
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -796,7 +795,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseApplicationEndpointMbr
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -824,7 +823,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseConnectivityServiceList
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -842,7 +841,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseConnectivityService(
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -865,7 +864,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseConnectivityService(ctx
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -888,7 +887,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseConnectivityService(ct
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -911,7 +910,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteList(ctx echo.Conte
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -929,7 +928,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSite(ctx echo.Contex
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -952,7 +951,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSite(ctx echo.Context) 
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -975,7 +974,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSite(ctx echo.Context)
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -998,7 +997,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceList(ctx echo
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1021,7 +1020,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroupList(ctx
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1044,7 +1043,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteDeviceGroup(ctx 
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1072,7 +1071,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroup(ctx ech
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1100,7 +1099,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteDeviceGroup(ctx ec
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1128,7 +1127,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroupDeviceLi
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1156,7 +1155,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteDeviceGroupDevic
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1189,7 +1188,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroupDevice(c
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1222,7 +1221,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteDeviceGroupDevice(
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1255,7 +1254,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteDeviceGroupMbr(c
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1283,7 +1282,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDeviceGroupMbr(ctx 
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1311,7 +1310,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteDeviceGroupMbr(ctx
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1339,7 +1338,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteDevice(ctx echo.
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1367,7 +1366,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteDevice(ctx echo.Con
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1395,7 +1394,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteDevice(ctx echo.Co
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1423,7 +1422,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteImsiDefinition(c
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1446,7 +1445,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteImsiDefinition(ctx 
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1469,7 +1468,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteImsiDefinition(ctx
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1492,7 +1491,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteIpDomainList(ctx ec
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1515,7 +1514,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteIpDomain(ctx ech
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1543,7 +1542,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteIpDomain(ctx echo.C
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1571,7 +1570,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteIpDomain(ctx echo.
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1599,7 +1598,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteMonitoring(ctx e
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1622,7 +1621,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteMonitoring(ctx echo
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1645,7 +1644,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteMonitoring(ctx ech
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1668,7 +1667,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteMonitoringEdgeDevic
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1691,7 +1690,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteMonitoringEdgeDe
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1719,7 +1718,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteMonitoringEdgeDevic
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1747,7 +1746,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteMonitoringEdgeDevi
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1775,7 +1774,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSimCardList(ctx ech
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1798,7 +1797,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSimCard(ctx echo
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1826,7 +1825,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSimCard(ctx echo.Co
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1854,7 +1853,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSimCard(ctx echo.C
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1882,7 +1881,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceList(ctx echo.
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1905,7 +1904,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSlice(ctx echo.C
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1933,7 +1932,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSlice(ctx echo.Cont
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1961,7 +1960,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSlice(ctx echo.Con
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -1989,7 +1988,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceDeviceGroupLis
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2017,7 +2016,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSliceDeviceGroup
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2050,7 +2049,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceDeviceGroup(ct
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2083,7 +2082,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSliceDeviceGroup(c
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2116,7 +2115,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceFilterList(ctx
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2144,7 +2143,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSliceFilter(ctx 
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2177,7 +2176,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceFilter(ctx ech
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2210,7 +2209,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSliceFilter(ctx ec
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2243,7 +2242,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSliceMbr(ctx ech
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2271,7 +2270,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSliceMbr(ctx echo.C
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2299,7 +2298,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSliceMbr(ctx echo.
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2327,7 +2326,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSlicePriorityTraffi
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2355,7 +2354,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSlicePriorityTra
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2388,7 +2387,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSlicePriorityTraffi
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2421,7 +2420,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSlicePriorityTraff
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2454,7 +2453,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSmallCellList(ctx e
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2477,7 +2476,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteSmallCell(ctx ec
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2505,7 +2504,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteSmallCell(ctx echo.
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2533,7 +2532,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteSmallCell(ctx echo
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2561,7 +2560,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteUpfList(ctx echo.Co
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2584,7 +2583,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseSiteUpf(ctx echo.Con
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2612,7 +2611,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseSiteUpf(ctx echo.Contex
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2640,7 +2639,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseSiteUpf(ctx echo.Conte
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2668,7 +2667,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseTemplateList(ctx echo.C
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2686,7 +2685,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseTemplate(ctx echo.Co
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2709,7 +2708,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseTemplate(ctx echo.Conte
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2732,7 +2731,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseTemplate(ctx echo.Cont
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2755,7 +2754,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseTemplateMbr(ctx echo
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2778,7 +2777,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseTemplateMbr(ctx echo.Co
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2801,7 +2800,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseTemplateMbr(ctx echo.C
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2824,7 +2823,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseTrafficClassList(ctx ec
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2842,7 +2841,7 @@ func (w *ServerInterfaceWrapper) DeleteEnterprisesEnterpriseTrafficClass(ctx ech
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2865,7 +2864,7 @@ func (w *ServerInterfaceWrapper) GetEnterprisesEnterpriseTrafficClass(ctx echo.C
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
@@ -2888,7 +2887,7 @@ func (w *ServerInterfaceWrapper) PostEnterprisesEnterpriseTrafficClass(ctx echo.
 	// ------------- Path parameter "target" -------------
 	var target Target
 
-	target = ctx.Param("target")
+	target = Target(ctx.Param("target"))
 
 	// ------------- Path parameter "enterprise-id" -------------
 	var enterpriseId string
