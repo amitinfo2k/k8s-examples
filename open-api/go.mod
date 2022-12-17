@@ -3,6 +3,7 @@ module github.com/d-vignesh/Openapi-todo-app
 go 1.16
 
 require (
-	github.com/deepmap/oapi-codegen v1.8.1
-	github.com/go-chi/chi/v5 v5.0.0
+	github.com/labstack/echo/v4 v4.9.1
+	github.com/pkg/errors v0.8.1
+	gorm.io/gorm v1.24.2
 )
