@@ -5,6 +5,11 @@ import (
     "github.com/labstack/echo/v4"
     "github.com/labstack/echo/v4/middleware"
     "github.com/onosproject/onos-lib-go/pkg/logging"
+    "net/http"
+    "github.com/spf13/viper"
+    "github.com/amitinfo2k/k8s-examples/open-api/config"
+    "github.com/amitinfo2k/k8s-examples/open-api/db"
+    "os"
     "gorm.io/gorm"
 )
 
@@ -21,9 +26,15 @@ func (w *AetherServer) DeleteConnectivityServices(ctx echo.Context, target Targe
 }
 
 func (w *AetherServer) GetConnectivityServices(ctx echo.Context, target Target) error {
-    fmt.Println("Target ", target)
-    log.Infof("GetConnectivityServices")
-    panic("implement me")
+	var response interface{}
+	var cs []*EnterprisesEnterpriseConnectivityService
+	tx := w.DB.Find(&cs)
+	if tx.Error != nil {
+        	log.Infof("Get failed")
+	        return ctx.JSON(http.StatusOK,tx.Error)
+	}
+    	log.Infof("GetConnectivityServices")
+	return ctx.JSON(http.StatusOK, response)
 }
 
 func (w *AetherServer) GetConnectivityServicesConnectivityServiceList(ctx echo.Context, target Target) error {
@@ -445,7 +456,13 @@ func (w *AetherServer) PostConnectivityServices(ctx echo.Context, target Target)
 }
 
 func main() {
-    var s = AetherServer{}
+    conf := loadConfig()
+    d, err := db.Connect(conf)
+    if err != nil {
+        log.Panic("failed to connect database")
+    }
+
+    var s = AetherServer{ DB:d }
     // Echo instance
     echoRouter := echo.New()
 
@@ -459,6 +476,32 @@ func main() {
     echoRouter.Logger.Fatal(echoRouter.Start(":8080"))
 }
 
+func overrideUsingEnvVars(config *config.Config) {
+    if host, present := os.LookupEnv("DB_HOST"); present {
+        config.Database.Host = host
+    }
+}
 
+func loadConfig() *config.Config {
+    env := "local"
+    if v, present := os.LookupEnv("ENV"); present {
+        env = v
+    }
+    viper.SetConfigName(fmt.Sprintf("%s-env", env))
+    viper.SetConfigType("yaml")
+    viper.AddConfigPath("./config/")
+    viper.AutomaticEnv()
+    err := viper.ReadInConfig()
+    if err != nil {
+        panic(fmt.Errorf("fatal error config file: %w", err))
+    }
+    var conf config.Config
+    err = viper.Unmarshal(&conf)
+    if err != nil {
+        panic(fmt.Errorf("unable to decode into struct: %w", err))
+    }
+    overrideUsingEnvVars(&conf)
+    return &conf
+}
 
 
