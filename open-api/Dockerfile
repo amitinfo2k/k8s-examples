@@ -6,12 +6,13 @@ COPY go.sum ./
 RUN go mod tidy
 RUN go mod download
 COPY . ./
-RUN go build -o /open-api
+RUN go build -o /roc-api ./cmd/roc-api
+RUN pwd && ls -l
 
 FROM alpine:3.15
-COPY --from=build /open-api /open-api
+COPY --from=build /roc-api /roc-api
 COPY --from=build /app/config /config
 EXPOSE 8080
 RUN adduser -D nonroot
 USER nonroot
-ENTRYPOINT ["/open-api"]
+ENTRYPOINT ["/roc-api"]
