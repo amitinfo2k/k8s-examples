@@ -78,14 +78,16 @@ func tcpdumpHandler(w http.ResponseWriter, r *http.Request) {
 
 		if msg.Action == "start" {
 			if pid == -1 {
-				filePath := os.Getenv("PCAP_DIR") + "/" + msg.Pcapfile //TODO: Update this
+				//filePath := os.Getenv("PCAP_DIR") + "/" + msg.Pcapfile //TODO: Update this
+				filePath := os.Getenv("PCAP_DIR") + "/trace_%Y-%m-%d_%H%M%S_" +os.Getenv("HOSTNAME")  + ".pcap" //TODO: Update this
+
 				err := createDir(filePath)
 				if err != nil {
 					resp.Status = "Failed to create dir"
 					fmt.Printf("[ERROR]Failed to create dir %s", err)
 				} else {
-					fmt.Println("[DEBUG] tcpdump start")
-					cmd := exec.Command("tcpdump", "-i", "any", "-w", "/dump/trace_%Y-%m-%d_%H%M%S"+msg.Pcapfile+".pcap", "-G", "3600", "-z", "/var/tmp/cleanup.sh")
+					fmt.Println("[DEBUG] tcpdump start ",filePath)
+					cmd := exec.Command("tcpdump", "-i", "any", "-w",filePath, "-G", "3600", "-z", "/var/tmp/cleanup.sh")
 					err := cmd.Start()
 					if err != nil {
 						fmt.Println("[ERROR] tcpdump start", err)

@@ -19,15 +19,55 @@ spec:
       name: tcpdump-svc
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-volume-1
+  labels:
+    type: local
+spec:
+  storageClassName: silver
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/data/"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tcpd-pv-claim
+spec:
+  storageClassName: silver
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-pv-claim
+spec:
+  storageClassName: silver
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
 kind: Pod
 metadata:
-  name: test
+  name: nginx
   labels:
     app.kubernetes.io/name: tcpdump
 spec:
   volumes:
     - name: shared-data
-      emptyDir: {}
+      persistentVolumeClaim:
+        claimName: tcpd-pv-claim
   containers:
     - name: nginx
       image: amitinfo2k/nginx:1.0.3
