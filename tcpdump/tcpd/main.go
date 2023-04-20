@@ -139,36 +139,12 @@ func tcpdumpHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func tcpdumpFiles(w http.ResponseWriter, r *http.Request) {
-	files, err := ioutil.ReadDir("/dump/") //TODO: update path
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
-
-	var list []string
-
-	for _, f := range files {
-		list = append(list, f.Name())
-	}
-
-	data, err := json.Marshal(list)
-	if err != nil {
-		log.Println("could not marshal", err)
-		return
-	}
-	w.Write(data)
-}
-
 func main() {
 	// Create Server and Route Handlers
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", handler)
 	r.HandleFunc("/tcpdump", tcpdumpHandler)
-	r.HandleFunc("/tcpdumpfile", tcpdumpFiles)
-	r.PathPrefix("/tcpdumpfile/").Handler(http.StripPrefix("/tcpdumpfile",
-		http.FileServer(http.Dir("/dump")))) //TODO: update path
 
 	srv := &http.Server{
 		Handler:      r,
