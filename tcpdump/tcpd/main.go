@@ -2,21 +2,23 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"os/exec"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
-	"io/ioutil"
-  	"encoding/json"
-	"strings"
+
 	"github.com/gorilla/mux"
 )
 
 var pid = -1
+
 type TCPDumpRequest struct {
 	Action   string `json:"action"`
 	Pcapfile string `json:"pcap_file"`
@@ -65,59 +67,59 @@ func tcpdumpHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// Unmarshal		
+		// Unmarshal
 		err = json.Unmarshal(b, &msg)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
-		
+
 		log.Printf("Request received %+v \n", msg)
-		
+
 		if msg.Action == "start" {
 			if pid == -1 {
-	                	filePath := os.Getenv("PCAP_DIR")+"/"+ msg.Pcapfile 
+				filePath := os.Getenv("PCAP_DIR") + "/" + msg.Pcapfile //TODO: Update this
 				err := createDir(filePath)
 				if err != nil {
 					resp.Status = "Failed to create dir"
 					fmt.Printf("[ERROR]Failed to create dir %s", err)
-				}else{
+				} else {
 					fmt.Println("[DEBUG] tcpdump start")
-					cmd := exec.Command("tcpdump","-i","any","-w", "/dump/trace_%Y-%m-%d_%H%M%S"+filePath+".pcap", "-G", "3600", "-z", "/var/tmp/cleanup.sh")
+					cmd := exec.Command("tcpdump", "-i", "any", "-w", "/dump/trace_%Y-%m-%d_%H%M%S"+msg.Pcapfile+".pcap", "-G", "3600", "-z", "/var/tmp/cleanup.sh")
 					err := cmd.Start()
 					if err != nil {
-						fmt.Println("[ERROR] tcpdump start",err)
+						fmt.Println("[ERROR] tcpdump start", err)
 					}
 					pid = cmd.Process.Pid
-					fmt.Println("Started tcpdump pid",cmd.Process.Pid)  
+					fmt.Println("Started tcpdump pid", cmd.Process.Pid)
 					resp.Status = "Started"
 					resp.Pcapfile = msg.Pcapfile
 				}
-				
-			}else{
+
+			} else {
 				resp.Status = "Already running"
-				fmt.Println("Already running tcpdump pid",pid)
+				fmt.Println("Already running tcpdump pid", pid)
 			}
-			
-		}else if msg.Action == "stop" {
-			fmt.Println("[DEBUG] tcpdump stop ",pid)
-			
-			process,err := os.FindProcess(pid)
+
+		} else if msg.Action == "stop" {
+			fmt.Println("[DEBUG] tcpdump stop ", pid)
+
+			process, err := os.FindProcess(pid)
 			if err == nil {
 				if err = process.Kill(); err == nil {
 					resp.Status = "Stopped"
-				}else{
-					resp.Status = "Failed to stop"					
-					fmt.Println("[ERROR] failed to kill process  ",pid)
+				} else {
+					resp.Status = "Failed to stop"
+					fmt.Println("[ERROR] failed to kill process  ", pid)
 				}
-			}else{
+			} else {
 				resp.Status = "Process not found"
-				fmt.Println("[ERROR] process not found ",pid)
+				fmt.Println("[ERROR] process not found ", pid)
 			}
-			
+
 			pid = -1
 			resp.Pcapfile = msg.Pcapfile
-			
+
 		}
 		output, err := json.Marshal(resp)
 		if err != nil {
@@ -127,14 +129,35 @@ func tcpdumpHandler(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("content-type", "application/json")
 		w.Write(output)
 		return
-		
+
 	default:
 		log.Printf("Method not supported %s\n", r.Method)
-		http.Error(w, fmt.Sprintf("%sMethod not supported\n",r.Method), 404)
-		
+		http.Error(w, fmt.Sprintf("%sMethod not supported\n", r.Method), 404)
+
 		return
 	}
 
+}
+
+func tcpdumpFiles(w http.ResponseWriter, r *http.Request) {
+	files, err := ioutil.ReadDir("/dump/") //TODO: update path
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	var list []string
+
+	for _, f := range files {
+		list = append(list, f.Name())
+	}
+
+	data, err := json.Marshal(list)
+	if err != nil {
+		log.Println("could not marshal", err)
+		return
+	}
+	w.Write(data)
 }
 
 func main() {
@@ -143,6 +166,9 @@ func main() {
 
 	r.HandleFunc("/", handler)
 	r.HandleFunc("/tcpdump", tcpdumpHandler)
+	r.HandleFunc("/tcpdumpfile", tcpdumpFiles)
+	r.PathPrefix("/tcpdumpfile/").Handler(http.StripPrefix("/tcpdumpfile",
+		http.FileServer(http.Dir("/dump")))) //TODO: update path
 
 	srv := &http.Server{
 		Handler:      r,
@@ -178,4 +204,3 @@ func waitForShutdown(srv *http.Server) {
 	log.Println("Shutting down")
 	os.Exit(0)
 }
-
